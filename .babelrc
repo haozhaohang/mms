@@ -1,0 +1,21 @@
+{
+  "presets": [
+    ["env", {
+       modules: false
+    }],
+    "react"
+  ],
+  "plugins": [
+    ["import", { libraryName: "antd", style: "css" }],
+    ["transform-runtime", {
+      "helpers": false, // defaults to true
+      "polyfill": false, // defaults to true
+      "regenerator": true, // defaults to true
+      "moduleName": "babel-runtime" // defaults to "babel-runtime"
+    }],
+    "react-hot-loader/babel",
+    "transform-object-rest-spread",
+    "transform-decorators-legacy",
+    "transform-async-to-generator"
+  ]
+}

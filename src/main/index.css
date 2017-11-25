@@ -1,0 +1,30 @@
+p {
+    margin: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+section, span, div, ul, li {
+    box-sizing: border-box;
+}
+
+html, body, #root, .router-content {
+    height: 100%;
+}
+
+.router-content {
+    display: flex;
+}
+
+.clear:after {
+    display: block;
+    content: '';
+    clear: both;
+}

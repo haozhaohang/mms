@@ -1,0 +1,3 @@
+// 门店管理
+export const MERCHANT_LIST_SUC = 'MERCHANT_LIST_SUC'
+export const MERCHANT_INFO_SUC = 'MERCHANT_INFO_SUC'

@@ -1,0 +1,87 @@
+html, body, #root {
+    height: 100%;
+}
+
+.login {
+    background: #f0f2f5;
+    background-image: url(https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg);
+    width: 100%;
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    padding: 140px 0 144px 0;
+    position: relative;
+
+    .top {
+        text-align: center;
+
+        .header {
+            height: 50px;
+            line-height: 44px;
+
+            a {
+                text-decoration: none;
+
+                .logo {
+                    height: 44px;
+                    vertical-align: top;
+                    margin-right: 16px
+                }
+
+                .title {
+                    font-size: 33px;
+                    color: rgba(0, 0, 0, 0.85);
+                    font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+                    font-weight: 600;
+                    position: relative;
+                    top: 2px;
+                }
+            }
+        }
+
+        .desc {
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.45);
+            margin-top: 12px;
+            margin-bottom: 40px;
+        }
+
+    }
+    .main {
+        width: 368px;
+        margin: 0 auto;
+
+        .ant-tabs .ant-tabs-bar {
+          border-bottom: 0;
+          margin-bottom: 24px;
+          text-align: center;
+        }
+
+        .ant-form-item {
+          margin-bottom: 24px;
+        }
+        .prefixIcon {
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.25);
+        }
+
+        .additional {
+            text-align: left;
+
+            .forgot {
+                float: right;
+            }
+
+            .submit {
+                width: 100%;
+                margin-top: 24px;
+            }
+
+            .ant-form-item-control {
+                line-height: 22px;
+            }
+
+        }
+    }
+}
