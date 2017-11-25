@@ -5,11 +5,14 @@ import menu from './menu'
 import merchantList from './merchantList'
 import merchantEdit from './merchantEdit'
 
+import orderList from './orderList'
+
 const rootReducer = combineReducers({
     user,
     menu,
     merchantList,
-    merchantEdit
+    merchantEdit,
+    orderList
 })
 
 export default rootReducer

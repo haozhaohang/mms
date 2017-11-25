@@ -12,3 +12,6 @@ export const MERCHANT_ADD = `${prefix}/merchant/create`
 export const MERCHANT_UPDATE = `${prefix}/merchant/update`
 export const MERCHANT_ON_STATUS = `${prefix}/merchant/on`
 export const MERCHANT_OFF_STATUS = `${prefix}/merchant/off`
+
+// 订单管理
+export const ORDER_LIST = `${prefix}/order/clist`

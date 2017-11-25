@@ -1,10 +1,9 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom'
 import { Button, Table, Modal, notification } from 'antd'
 
 import { equalByProps } from 'assets/js/util'
-import * as actions from 'actions/merchantList'
+import * as actions from 'actions/orderList'
 import columns from './columns'
 import Filter from './filter';
 
@@ -12,7 +11,7 @@ import './index.css'
 
 const confirm = Modal.confirm;
 
-class MerchantList extends PureComponent {
+class orderList extends PureComponent {
     constructor(props) {
         super(props)
 
@@ -20,7 +19,6 @@ class MerchantList extends PureComponent {
 
         this.handleFetchList = this.handleFetchList.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleChangeStatus = this.handleChangeStatus.bind(this)
     }
 
     componentDidMount() {
@@ -29,14 +27,15 @@ class MerchantList extends PureComponent {
 
     componentDidUpdate(prevProps) {
         if (equalByProps(this.props, prevProps, ['pageIndex'])) {
+
             this.handleFetchList()
         }
     }
 
     handleFetchList() {
-        const { pageIndex, pageSize, fetchMerchantList } = this.props
-
-        fetchMerchantList({ pageIndex, pageSize });
+        const { pageIndex, pageSize, fetchOrderList } = this.props
+   
+        fetchOrderList({ pageIndex, pageSize });
     }
 
     handleSubmit(value) {
@@ -67,11 +66,6 @@ class MerchantList extends PureComponent {
         return (
             <section className="merchant-list">
                 <div className="filter-content">
-                    <NavLink to="/merchant-edit">
-                        <Button type="primary" icon="plus">新增门店</Button>
-                    </NavLink>
-                </div>
-                <div className="filter-content">
                     <Filter
                         onSubmit={this.handleSubmit}
                     />
@@ -88,9 +82,9 @@ class MerchantList extends PureComponent {
     }
 }
 
-const mapStateToProps = ({ merchantList }, { location }) => {
-    console.log(location.search)
-    const { list, pageIndex, pageSize, total } = merchantList
+const mapStateToProps = ({ orderList }, { location }) => {
+    const { list, pageIndex, pageSize, total } = orderList
+
     return {
         list,
         pageIndex,
@@ -101,4 +95,4 @@ const mapStateToProps = ({ merchantList }, { location }) => {
 
 const mapDispatchToProps = { ...actions };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MerchantList)
+export default connect(mapStateToProps, mapDispatchToProps)(orderList)
