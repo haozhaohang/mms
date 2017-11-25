@@ -52,6 +52,10 @@ html, body, #root {
         width: 368px;
         margin: 0 auto;
 
+        .ant-input-affix-wrapper, .ant-btn {
+            height: 42px;
+        }
+
         .ant-tabs .ant-tabs-bar {
           border-bottom: 0;
           margin-bottom: 24px;

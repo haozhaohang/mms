@@ -7,7 +7,7 @@ const initState = {
     pageSize: 10
 }
 
-export default function finishMerchantList (state = initState, { type, payload }) {
+export default function merchantList (state = initState, { type, payload }) {
   switch (type) {
     case actionTypes.MERCHANT_LIST_SUC: {
         const { list, count, page } = payload

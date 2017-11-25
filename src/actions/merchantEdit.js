@@ -9,7 +9,7 @@ export const fetchMerchantInfo = (params ={}) => {
     return async (dispatch) => {
         let payload = {};
 
-        if (params.merchantId) {
+        if (params.id) {
             try {
                 payload = await get(api.MERCHANT_INFO, params);
             } catch (e) {
@@ -22,9 +22,9 @@ export const fetchMerchantInfo = (params ={}) => {
 }
 
 export const fetchMerchantEdit = (params ={}) => {
-    const url = params.merchantId ? 'MERCHANT_UPDATE' : 'MERCHANT_ADD'
+    const url = params.merchantId ? api.MERCHANT_UPDATE : api.MERCHANT_ADD
 
-    return () => post(api.MERCHANT_INFO, params);
+    return () => post(url, params);
 }
 
 

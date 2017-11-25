@@ -40,16 +40,14 @@ export default class App extends PureComponent {
 
     render() {
         const { initState, store } = this.state;
-
         if (!initState || !store) {
             return <h3>加载中</h3>;
         }
 
-        // const { menu } = initState;
-        // const indexPath = menu[0].path || menu[0].children[0].children[0].path;
+        const { menu } = initState;
 
-        // return <RouteTree store={store} history={history} indexPath={indexPath} />
+        const indexPath = menu[0].chidren[0].path;
 
-        return <RouteTree store={store} />;
+        return <RouteTree store={store} indexPath={indexPath} />;
     }
 }

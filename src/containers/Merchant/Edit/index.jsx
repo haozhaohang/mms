@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom'
-import { Button, Form, Input, InputNumber } from 'antd'
+import { Button, Form, Input, InputNumber, notification } from 'antd'
+import URI from 'urijs'
 
 import FormItem from 'components/FormItem'
 import * as actions from 'actions/merchantEdit'
@@ -15,69 +16,77 @@ class MerchantEdit extends PureComponent {
     }
 
     componentDidMount() {
-        const { fetchMerchantInfo } = this.props
+        const { id, fetchMerchantInfo } = this.props
 
-        fetchMerchantInfo();
+        fetchMerchantInfo({ id });
     }
 
     handleSubmit(e) {
         e.preventDefault();
 
-        const { info, form, fetchMerchantEdit } = this.props;
+        const { info, form, history, fetchMerchantEdit } = this.props;
 
         form.validateFields((errors, values) => {
             if (errors) {
                 return;
             }
 
-            fetchMerchantEdit(values)
+            fetchMerchantEdit(values).then(() => {
+                notification.success({
+                    message: '提示信息',
+                    description: '保存成功',
+                });
+
+                history.goBack();
+            })
         });
     }
 
     render() {
         const {
+            info,
             form: { getFieldDecorator }
         } = this.props;
 
         const merchantNameFieldDecorator = getFieldDecorator('merchant_name', {
-            initialValue: '',
+            initialValue: info.merchant_name,
             rules: [
                 { required: true, max: 100, message: '请输入商品名称，不超过 100 个字' }
             ]
         });
 
         const ownerNameFieldDecorator = getFieldDecorator('owner_name', {
-            initialValue: '',
+            initialValue: info.owner_name,
             rules: [
                 { required: true, max: 100, message: '请输入商品名称，不超过 100 个字' }
             ]
         });
 
         const ownerTelephoneFieldDecorator = getFieldDecorator('owner_telephone', {
-            initialValue: '',
+            initialValue: info.owner_telephone,
             rules: [
                 { required: true, max: 100, message: '请输入商品名称，不超过 100 个字' }
             ]
         });
 
         const telFieldDecorator = getFieldDecorator('tel', {
-            initialValue: '',
+            initialValue: info.tel,
             rules: [
                 { required: true, message: '请输入商品名称' }
             ]
         });
 
         const machinesFieldDecorator = getFieldDecorator('machines', {
-            initialValue: '',
+            initialValue: info.machines,
             rules: [
-                { required: true, max: 100, message: '请输入商品名称，不超过 100 个字' }
+                { required: true, message: '请输入商品名称，不超过 100 个字' }
             ]
         });
 
         const addressFieldDecorator = getFieldDecorator('address', {
-            initialValue: '',
+            initialValue: info.address,
             rules: [
-                { required: true, max: 100, message: '请输入商品名称，不超过 100 个字' }
+                { required: true, message: '请输入商品名称，不超过 100 个字' }
             ]
         });
 
@@ -145,7 +154,7 @@ class MerchantEdit extends PureComponent {
     }
 }
 
-const mapStateToProps = ({ home }, { location }) => ({ ...home })
+const mapStateToProps = ({ merchantEdit }, { location }) => ({ ...merchantEdit, ...URI.parseQuery(location.search) })
 
 const mapDispatchToProps = { ...actions };
 

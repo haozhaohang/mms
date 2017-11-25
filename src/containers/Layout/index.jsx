@@ -1,30 +1,14 @@
 import React, { PureComponent } from 'react'
 import { Layout, Menu, Icon } from 'antd'
+import { connect } from 'react-redux';
 
+import sidebarPaths from 'constants/sidebar';
 import PageRoute from './route';
-
 import './index.css'
 
+const SubMenu = Menu.SubMenu;
+
 const { Header, Sider, Content } = Layout;
-
-const menu = [
-    {
-        name: '门店管理',
-        icon: 'user',
-        path: '/merchant-list'
-    },
-    {
-        name: '商品管理',
-        icon: 'video-camera',
-        path: '/goods-list'
-    },
-    {
-        name: '会员管理',
-        icon: 'video-camera',
-        path: '/member-list'
-    }
-]
-
 
 class BasicLayout extends PureComponent {
     constructor(props) {
@@ -45,13 +29,15 @@ class BasicLayout extends PureComponent {
     }
 
     handleChangeMenu({ key }) {
+
         const { history: { push } } = this.props
 
-        push(menu[key].path)
+        push(sidebarPaths[key])
     }
 
     render() {
         const { collapsed } = this.state
+        const { menu } = this.props
 
         return (
             <Layout className="basic-layout">
@@ -65,16 +51,22 @@ class BasicLayout extends PureComponent {
                     <Menu
                         theme="dark"
                         mode="inline"
+                        defaultOpenKeys={[menu[0].id]}
+                        defaultSelectedKeys={[menu[0].chidren[0].id]}
                         onClick={this.handleChangeMenu}
                     >
                         {
-                            menu.map(({ name, icon, path }, index) => (
-                                <Menu.Item
-                                    key={index}
-                                >
-                                    <Icon type={icon} />
-                                    <span>{name}</span>
-                                </Menu.Item>
+                            menu.map(({ id, name, chidren }) => (
+                                <SubMenu
+                                    key={id}
+                                    title={<span><Icon type="mail" /><span>{name}</span></span>}
+                                > 
+                                    {
+                                        chidren.map(({ id, name, path }) => (
+                                            <Menu.Item key={id} path={path}>{name}</Menu.Item>
+                                        ))
+                                    }
+                                </SubMenu>
                             ))
                         }
                     </Menu>
@@ -98,4 +90,13 @@ class BasicLayout extends PureComponent {
     }
 }
 
-export default BasicLayout
+const mapStateToProps = ({ user, menu }, { location: { pathname } }) => ({
+    user,
+    menu
+});
+
+const mapDispatchToProps = {
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BasicLayout);

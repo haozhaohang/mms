@@ -35,7 +35,7 @@ export default function(component) {
                 className: 'row-operation',
                 render: value => (
                     <div>
-                        <NavLink to="/merchant-edit">
+                        <NavLink to={`/merchant-edit?id=${value.id}`}>
                             <Icon type="edit" /> 编辑
                         </NavLink>
                         <a onClick={() => component.handleChangeStatus(value)}>
