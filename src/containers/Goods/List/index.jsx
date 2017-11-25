@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom'
-import { Button, Table, Modal } from 'antd'
+import { Button, Table, Modal, notification } from 'antd'
 
 import { equalByProps } from 'assets/js/util'
-import * as actions from 'actions/merchantList'
+import * as actions from 'actions/goodsList'
 import columns from './columns'
 import Filter from './filter';
 
@@ -12,20 +12,7 @@ import './index.css'
 
 const confirm = Modal.confirm;
 
-function showConfirm() {
-  confirm({
-    title: 'Do you Want to delete these items?',
-    content: 'Some descriptions',
-    onOk() {
-      console.log('OK');
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-}
-
-class MerchantList extends PureComponent {
+class GoodsList extends PureComponent {
     constructor(props) {
         super(props)
 
@@ -47,9 +34,9 @@ class MerchantList extends PureComponent {
     }
 
     handleFetchList() {
-        const { pageIndex, pageSize, fetchMerchantList } = this.props
+        const { pageIndex, pageSize, fetchGoodsList } = this.props
 
-        fetchMerchantList({ pageIndex, pageSize });
+        fetchGoodsList({ pageIndex, pageSize });
     }
 
     handleSubmit(value) {
@@ -57,27 +44,21 @@ class MerchantList extends PureComponent {
     }
 
     handleChangeStatus({ id, status }) {
-        const { fetchMerchantChangeStatus } = this.props;
+        const { fetchMerchantChangeStatus } = this.props
+        const isOn = Number(status) === 10
 
-        // confirm({
-        //     title: '您确定要下线门店?',
-        //     content: '请谨慎操作!',
-        //     onOk: () => fetchMerchantChangeStatus({ id }),
-        //     onCancel() {
-        //         console.log('Cancel');
-        //     },
-        // });
-
-        Modal.confirm({
-            title: '确定要启用吗?',
-            content: '启用后用户将可以办理该会员卡',
-            okText: '确认',
-            cancelText: '取消',
-            onOk() {
-                fetchMerchantChangeStatus({id});
-            }
+        confirm({
+            title: `您确定要${isOn ? '下线' : '上线'}门店?`,
+            content: '请谨慎操作!',
+            onOk: () => fetchMerchantChangeStatus({ id, isOn }).then( () => {
+                notification.success({
+                    message: '提示信息',
+                    description: '设置成功'
+                });
+                this.handleFetchList();
+            })
         });
-        // showConfirm()
+
     }
 
     render() {
@@ -85,9 +66,9 @@ class MerchantList extends PureComponent {
 
         return (
             <section className="merchant-list">
-                <div>
-                    <NavLink to="/merchant-edit">
-                        <Button type="primary" icon="plus">新增门店</Button>
+                <div className="filter-content">
+                    <NavLink to="/goods-edit">
+                        <Button type="primary" icon="plus">新增单品</Button>
                     </NavLink>
                 </div>
                 <div className="filter-content">
@@ -107,9 +88,9 @@ class MerchantList extends PureComponent {
     }
 }
 
-const mapStateToProps = ({ merchantList }, { location }) => {
-    console.log(location.search)
-    const { list, pageIndex, pageSize, total } = merchantList
+const mapStateToProps = ({ goodsList }, { location }) => {
+    const { list, pageIndex, pageSize, total } = goodsList
+
     return {
         list,
         pageIndex,
@@ -120,4 +101,4 @@ const mapStateToProps = ({ merchantList }, { location }) => {
 
 const mapDispatchToProps = { ...actions };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MerchantList)
+export default connect(mapStateToProps, mapDispatchToProps)(GoodsList)

@@ -15,3 +15,8 @@ export const MERCHANT_OFF_STATUS = `${prefix}/merchant/off`
 
 // 订单管理
 export const ORDER_LIST = `${prefix}/order/clist`
+
+// 单品管理
+export const GOODS_LIST = `${prefix}/goods/clist`
+export const GOODS_ON_STATUS = `${prefix}/goods/on`
+export const GOODS_OFF_STATUS = `${prefix}/goods/off`

@@ -7,31 +7,37 @@ import { MERCHANT_STATUS } from 'constants/basic'
 export default function(component) {
     return [
             {
-                title: '门店名称',
-                dataIndex: 'merchant_name'
+                title: '单品名称',
+                dataIndex: 'name'
             },
             {
-                title: '创建时间',
-                dataIndex: 'create_time'
+                title: '单品图片',
+                dataIndex: 'image',
+                render: val => <img src={val} width="100" height="100" alt="单品图片" />
             },
             {
-                title: '联系电话',
-                dataIndex: 'tel'
+                title: '单位',
+                dataIndex: 'uni'
             },
             {
-                title: '手机号',
-                dataIndex: 'owner_telephone'
+                title: '价格',
+                dataIndex: 'price',
+                render: val => `${val}元`
             },
             {
-                title: '门店地址',
-                dataIndex: 'address'
+                title: '库存数量',
+                dataIndex: 'stock_num'
+            },
+            {
+                title: '售卖数量',
+                dataIndex: 'sale_num'
             },
             {
                 title: '操作',
                 className: 'row-operation',
                 render: value => (
                     <div>
-                        <NavLink to="/merchant-edit">
+                        <NavLink to={`/goods-edit?id=${value.id}`}>
                             <Icon type="edit" /> 编辑
                         </NavLink>
                         <a onClick={() => component.handleChangeStatus(value)}>
