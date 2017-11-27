@@ -16,6 +16,7 @@ class BasicLayout extends PureComponent {
 
         this.handleToggle = this.handleToggle.bind(this)
         this.handleChangeMenu = this.handleChangeMenu.bind(this)
+        this.handleQueryMenu = this.handleQueryMenu.bind(this)
 
         this.state = {
             collapsed: false
@@ -35,9 +36,27 @@ class BasicLayout extends PureComponent {
         push(sidebarPaths[key])
     }
 
+    handleQueryMenu() {
+        const { menu, pathname } = this.props
+        const openKeys = [];
+        const selectedKeys = [];
+
+        menu.forEach(({ id, chidren }) => (
+            chidren.forEach(({ id: pathId, path }) => {
+                if (pathname === path) {
+                    openKeys.push(id);
+                    selectedKeys.push(pathId);
+                }
+            })
+        ))
+
+        return { openKeys, selectedKeys }
+    }
+
     render() {
         const { collapsed } = this.state
-        const { menu } = this.props
+        const { menu, pathname } = this.props
+        const { openKeys, selectedKeys } = this.handleQueryMenu();
 
         return (
             <Layout className="basic-layout">
@@ -51,8 +70,8 @@ class BasicLayout extends PureComponent {
                     <Menu
                         theme="dark"
                         mode="inline"
-                        defaultOpenKeys={[menu[0].id]}
-                        defaultSelectedKeys={[menu[0].chidren[0].id]}
+                        defaultOpenKeys={openKeys}
+                        defaultSelectedKeys={selectedKeys}
                         onClick={this.handleChangeMenu}
                     >
                         {
@@ -91,6 +110,7 @@ class BasicLayout extends PureComponent {
 }
 
 const mapStateToProps = ({ user, menu }, { location: { pathname } }) => ({
+    pathname,
     user,
     menu
 });

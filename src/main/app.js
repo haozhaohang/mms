@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
-import RouteTree from './router';
-import { LOGIN_URL } from 'constants/basic';
+import { Spin } from 'antd';
 
+import { LOGIN_URL } from 'constants/basic';
+import RouteTree from './router';
 import initializeState from './initState';
 import createStore from './store'
 
@@ -41,7 +42,11 @@ export default class App extends PureComponent {
     render() {
         const { initState, store } = this.state;
         if (!initState || !store) {
-            return <h3>加载中</h3>;
+            return (
+                <div className="loading-container">
+                    <Spin size="large" />
+                </div>
+            );
         }
 
         const { menu } = initState;
