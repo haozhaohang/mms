@@ -5,7 +5,7 @@ import { Button, Table, Modal, notification } from 'antd'
 import URI from 'urijs'
 
 import { equalByProps } from 'assets/js/util'
-import * as actions from 'actions/goodsList'
+import * as actions from 'actions/categoryList'
 import * as router from 'actions/router'
 import columns from './columns'
 import Filter from './filter';
@@ -14,7 +14,7 @@ import './index.css'
 
 const confirm = Modal.confirm;
 
-class GoodsList extends PureComponent {
+class CategoryList extends PureComponent {
     constructor(props) {
         super(props)
 
@@ -31,15 +31,15 @@ class GoodsList extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        if (equalByProps(this.props, prevProps, ['pageIndex'])) {
+        if (equalByProps(this.props, prevProps, ['pageIndex', 'name',  'status', 'startTime', 'endTime'])) {
             this.handleFetchList()
         }
     }
 
     handleFetchList() {
-        const { pageIndex, pageSize, name, status, fetchGoodsList } = this.props
+        const { pageIndex, pageSize, name, status, startTime, endTime, fetchCategoryList } = this.props
 
-        fetchGoodsList({ pageIndex, pageSize, name, status });
+        fetchCategoryList({ pageIndex, pageSize, name, status, startTime, endTime });
     }
 
     handleSearch(value) {
@@ -49,13 +49,13 @@ class GoodsList extends PureComponent {
     }
 
     handleChangeStatus({ id, status }) {
-        const { fetchMerchantChangeStatus } = this.props
+        const { fetchCategoruChangeStatus } = this.props
         const isOn = Number(status) === 10
 
         confirm({
             title: `您确定要${isOn ? '下线' : '上线'}门店?`,
             content: '请谨慎操作!',
-            onOk: () => fetchMerchantChangeStatus({ id, isOn }).then( () => {
+            onOk: () => fetchCategoruChangeStatus({ id, isOn }).then( () => {
                 notification.success({
                     message: '提示信息',
                     description: '设置成功'
@@ -72,7 +72,13 @@ class GoodsList extends PureComponent {
     }
 
     render() {
-        const { list, total, pageIndex, name, status } = this.props
+        const { list, total, pageIndex, pageSize, name, status, startTime, endTime } = this.props
+
+        const pagination = {
+            pageSize,
+            total,
+            current: pageIndex
+        }
 
         return (
             <section className="merchant-list">
@@ -80,12 +86,14 @@ class GoodsList extends PureComponent {
                     <Filter
                         name={name}
                         status={status}
+                        startTime={startTime}
+                        endTime={endTime}
                         onSearch={this.handleSearch}
                     />
                 </div>
                 <div className="func-content">
-                    <NavLink to="/goods-edit">
-                        <Button type="primary" icon="plus">新增单品</Button>
+                    <NavLink to="/category-edit">
+                        <Button type="primary" icon="plus">新增商品分类</Button>
                     </NavLink>
                 </div>
                 <div>
@@ -93,6 +101,8 @@ class GoodsList extends PureComponent {
                         bordered
                         columns={this.columns}
                         dataSource={list}
+                        pagination={pagination}
+                        onChange={this.handleChangePage}
                     />
                 </div>
             </section>
@@ -100,8 +110,8 @@ class GoodsList extends PureComponent {
     }
 }
 
-const mapStateToProps = ({ goodsList }, { location }) => {
-    const { list, pageSize, total } = goodsList
+const mapStateToProps = ({ categoryList }, { location }) => {
+    const { list, pageSize, total } = categoryList
     const { pageIndex, ...others } = URI.parseQuery(location.search)
 
     return {
@@ -115,4 +125,4 @@ const mapStateToProps = ({ goodsList }, { location }) => {
 
 const mapDispatchToProps = { ...actions, ...router };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GoodsList)
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryList)

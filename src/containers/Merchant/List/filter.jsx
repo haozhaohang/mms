@@ -1,52 +1,148 @@
 import React, { PureComponent } from 'react';
-import { Form, Input, Button, Select } from 'antd';
+import { Form, Input, InputNumber, DatePicker, Button, Row, Col, Icon } from 'antd';
+import moment from 'moment'
 
 const FormItem = Form.Item;
-const Option = Select.Option;
+const RangePicker = DatePicker.RangePicker;
 
 class Filter extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleReset = this.handleReset.bind(this);
-    }
+        this.state = {
+            expandForm: false
+        }
 
-    handleSubmit(e) {
+        this.handleSearch = this.handleSearch.bind(this);
+        this.handleFormReset = this.handleFormReset.bind(this);
+
+        this.toggleForm = this.toggleForm.bind(this)
+        this.renderForm = this.renderForm.bind(this)
+        this.renderSimpleForm = this.renderSimpleForm.bind(this)
+        this.renderAdvancedForm = this.renderAdvancedForm.bind(this)
+    }
+    handleSearch(e) {
         e.preventDefault();
 
-        const { onSubmit, form } = this.props;
+        const { onSearch, form: { validateFields } } = this.props;
 
-        onSubmit(form.getFieldsValue());
+        validateFields((err, fieldsValue) => {
+            if (err) return;
+            const { pay_time, ...others } = fieldsValue
+
+            onSearch({
+                ...others,
+                startTime: pay_time && pay_time[0] && pay_time[0].unix(),
+                endTime: pay_time && pay_time[1] && pay_time[1].unix()
+            })
+        });
     }
 
-    handleReset() {
-        const { onSubmit, form: { resetFields } } = this.props;
+    handleFormReset() {
+        const { onSearch, form: { resetFields } } = this.props;
 
-        onSubmit({});
+        onSearch({});
         resetFields();
     }
 
-    render() {
-        const { cateList, goodsName, categoryId, status, form: { getFieldDecorator } } = this.props;
+    toggleForm() {
+        this.setState({
+            expandForm: !this.state.expandForm
+        });
+    }
+
+    renderForm() {
+        return this.state.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
+    }
+
+    renderSimpleForm() {
+        const { merchant_name, owner_telephone, form: { getFieldDecorator } } = this.props
 
         return (
-            <Form layout="inline" onSubmit={this.handleSubmit} className="search-form">
-                <FormItem label="门店名称">
-                    {
-                        getFieldDecorator('goodsName', { initialValue: goodsName })(
-                            <Input
-                                placeholder="请输入门店名称"
-                            />
-                        )
-                    }
-                </FormItem>
-                <div className="filter-btn">
-                    <Button type="primary" htmlType="submit">搜索</Button>
-                    <Button onClick={this.handleReset}>重置</Button>
+            <Form onSubmit={this.handleSearch} layout="inline">
+                <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                    <Col md={8} sm={24}>
+                        <FormItem label="门店名称">
+                            {getFieldDecorator('merchant_name', { initialValue: merchant_name })(
+                                <Input placeholder="请输入" />
+                            )}
+                        </FormItem>
+                    </Col>
+                    <Col md={8} sm={24}>
+                        <FormItem label="手机号">
+                            {getFieldDecorator('owner_telephone', { initialValue: owner_telephone })(
+                                <Input placeholder="请输入" />
+                            )}
+                        </FormItem>
+                    </Col>
+                    <Col md={8} sm={24}>
+                        <span>
+                            <Button type="primary" htmlType="submit">查询</Button>
+                            <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
+                            <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
+                                展开 <Icon type="down" />
+                            </a>
+                        </span>
+                    </Col>
+                </Row>
+            </Form>
+        );
+    }
+
+    renderAdvancedForm() {
+        const { merchant_name, owner_telephone, startTime, endTime, form: { getFieldDecorator } } = this.props
+        console.log(startTime)
+        return (
+            <Form onSubmit={this.handleSearch} layout="inline">
+                <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                    <Col md={8} sm={24}>
+                        <FormItem label="门店名称">
+                            {
+                                getFieldDecorator('merchant_name', { initialValue: merchant_name })(
+                                    <Input placeholder="请输入" />
+                                )
+                            }
+                        </FormItem>
+                    </Col>
+                    <Col md={8} sm={24}>
+                        <FormItem label="手机号">
+                            {
+                                getFieldDecorator('owner_telephone', { initialValue: owner_telephone })(
+                                    <Input placeholder="请输入" />
+                                )
+                            }
+                        </FormItem>
+                    </Col>
+                    <Col md={8} sm={24}>
+                        <FormItem label="创建时间">
+                            {
+                                getFieldDecorator(
+                                    'pay_time',
+                                    { initialValue: [ startTime && moment.unix(startTime), endTime && moment.unix(endTime) ] }
+                                )(
+                                    <RangePicker
+                                        format="YYYY-MM-DD"
+                                    />
+                                )
+                            }
+                        </FormItem>
+                    </Col>
+                </Row>
+                <div style={{ overflow: 'hidden' }}>
+                    <span style={{ float: 'right', marginBottom: 24 }}>
+                        <Button type="primary" htmlType="submit">查询</Button>
+                        <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
+                        <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
+                            收起 <Icon type="up" />
+                        </a>
+                    </span>
                 </div>
             </Form>
         );
+    }
+    
+    render() {
+        return (this.renderForm());
     }
 }
 

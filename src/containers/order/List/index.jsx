@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { Button, Table, Modal, notification } from 'antd'
+import URI from 'urijs'
 
 import { equalByProps } from 'assets/js/util'
 import * as actions from 'actions/orderList'
+import * as router from 'actions/router'
 import columns from './columns'
 import Filter from './filter';
 
@@ -18,7 +20,9 @@ class orderList extends PureComponent {
         this.columns = columns(this)
 
         this.handleFetchList = this.handleFetchList.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSearch = this.handleSearch.bind(this)
+        this.handleChangeStatus = this.handleChangeStatus.bind(this)
+        this.handleChangePage = this.handleChangePage.bind(this)
     }
 
     componentDidMount() {
@@ -26,20 +30,22 @@ class orderList extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        if (equalByProps(this.props, prevProps, ['pageIndex'])) {
+        if (equalByProps(this.props, prevProps, ['pageIndex', 'order_id', 'status', 'startTime', 'endTime'])) {
 
             this.handleFetchList()
         }
     }
 
     handleFetchList() {
-        const { pageIndex, pageSize, fetchOrderList } = this.props
+        const { pageIndex, pageSize, order_id, status, startTime, endTime, fetchOrderList } = this.props
    
-        fetchOrderList({ pageIndex, pageSize });
+        fetchOrderList({ pageIndex, pageSize, order_id, status, startTime, endTime });
     }
 
-    handleSubmit(value) {
-        console.log('search', value)
+    handleSearch(value) {
+        const { replaceQuery } = this.props
+        
+        replaceQuery(value)
     }
 
     handleChangeStatus({ id, status }) {
@@ -57,17 +63,31 @@ class orderList extends PureComponent {
                 this.handleFetchList();
             })
         });
+    }
 
+    handleChangePage({ current: pageIndex }) {
+        const { updateQuery } = this.props
+
+        updateQuery({ pageIndex })
     }
 
     render() {
-        const { list, total, pageIndex } = this.props
+        const { list, total, pageSize, pageIndex, order_id, status, startTime, endTime } = this.props
 
+        const pagination = {
+            pageSize,
+            total,
+            current: pageIndex
+        }
         return (
             <section className="merchant-list">
                 <div className="filter-content">
                     <Filter
-                        onSubmit={this.handleSubmit}
+                        onSearch={this.handleSearch}
+                        order_id={order_id}
+                        status={status}
+                        startTime={startTime}
+                        endTime={endTime}
                     />
                 </div>
                 <div>
@@ -75,6 +95,8 @@ class orderList extends PureComponent {
                         bordered
                         columns={this.columns}
                         dataSource={list}
+                        pagination={pagination}
+                        onChange={this.handleChangePage}
                     />
                 </div>
             </section>
@@ -83,16 +105,18 @@ class orderList extends PureComponent {
 }
 
 const mapStateToProps = ({ orderList }, { location }) => {
-    const { list, pageIndex, pageSize, total } = orderList
+    const { list, pageSize, total } = orderList
+    const { pageIndex, ...others } = URI.parseQuery(location.search)
 
     return {
+        ...others,
         list,
-        pageIndex,
-        total,
-        pageSize
+        pageSize,
+        total: Number(total),
+        pageIndex: Number(pageIndex || 1)
     }
 }
 
-const mapDispatchToProps = { ...actions };
+const mapDispatchToProps = { ...actions, ...router };
 
 export default connect(mapStateToProps, mapDispatchToProps)(orderList)

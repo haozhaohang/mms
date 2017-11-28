@@ -30,7 +30,7 @@ const uglifyJs = new webpack.optimize.UglifyJsPlugin({
 });
 
 module.exports = {
-  devtool: 'cheap-source-map',
+  devtool: 'source-map',
 
   context: srcDir,
 
@@ -45,6 +45,7 @@ module.exports = {
       alias: {
         actions: resolve(__dirname, 'src/actions/'),
         constants: resolve(__dirname, 'src/constants/'),
+        components: resolve(__dirname, 'src/components/'),
         assets: resolve(__dirname, 'src/assets/'),
         containers: resolve(__dirname, 'src/containers/'),
         main: resolve(__dirname, 'src/main/'),

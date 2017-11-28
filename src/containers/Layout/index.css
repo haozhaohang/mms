@@ -17,19 +17,27 @@
             color: #108ee9;
         }
     }
-
-    .header {
-        background: #fff;
-        padding: 0;
-    }
-
+    
     .content {
-        margin: 24px 16px;
+        margin: 88px 16px 24px;
         padding: 24px;
         background: #fff;
 
         .filter-content {
-            padding-bottom: 25px;
+            /* padding-bottom: 25px; */
+
+            .ant-form-item {
+                display: flex;
+                margin-bottom: 24px;                
+
+                .ant-form-item-control-wrapper{
+                    flex: 1;
+
+                    .ant-select, .ant-calendar-picker {
+                        width: 100% !important;
+                    }
+                }
+            }
 
             .filter-btn{
                 margin-top: 20px;
@@ -40,6 +48,10 @@
                     }
                 }
             }
+        }
+
+        .func-content {
+            padding-bottom: 25px;
         }
 
         .ant-table {

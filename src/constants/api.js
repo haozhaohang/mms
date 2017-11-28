@@ -16,6 +16,14 @@ export const MERCHANT_OFF_STATUS = `${prefix}/merchant/off`
 // 订单管理
 export const ORDER_LIST = `${prefix}/order/clist`
 
+// 商品分类管理
+export const CATEGORY_LIST = `${prefix}/category/clist`
+export const CATEGORY_INFO = `${prefix}/category/info`
+export const CATEGORY_ADD = `${prefix}/category/create`
+export const CATEGORY_UPDATE = `${prefix}/category/update`
+export const CATEGORY_ON_STATUS = `${prefix}/category/on`
+export const CATEGORY_OFF_STATUS = `${prefix}/category/off`
+
 // 单品管理
 export const GOODS_LIST = `${prefix}/goods/clist`
 export const GOODS_ON_STATUS = `${prefix}/goods/on`

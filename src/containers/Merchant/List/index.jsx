@@ -2,9 +2,11 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import { Button, Table, Modal, notification } from 'antd'
+import URI from 'urijs'
 
 import { equalByProps } from 'assets/js/util'
 import * as actions from 'actions/merchantList'
+import * as router from 'actions/router'
 import columns from './columns'
 import Filter from './filter';
 
@@ -19,8 +21,9 @@ class MerchantList extends PureComponent {
         this.columns = columns(this)
 
         this.handleFetchList = this.handleFetchList.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSearch = this.handleSearch.bind(this)
         this.handleChangeStatus = this.handleChangeStatus.bind(this)
+        this.handleChangePage = this.handleChangePage.bind(this)
     }
 
     componentDidMount() {
@@ -28,19 +31,21 @@ class MerchantList extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        if (equalByProps(this.props, prevProps, ['pageIndex'])) {
+        if (equalByProps(this.props, prevProps, ['pageIndex', 'merchant_name',  'owner_telephone',  'startTime', 'endTime'])) {
             this.handleFetchList()
         }
     }
 
     handleFetchList() {
-        const { pageIndex, pageSize, fetchMerchantList } = this.props
+        const { pageIndex, pageSize, merchant_name, owner_telephone, startTime, endTime, fetchMerchantList } = this.props
 
-        fetchMerchantList({ pageIndex, pageSize });
+        fetchMerchantList({ pageIndex, pageSize, merchant_name, owner_telephone, startTime, endTime });
     }
 
-    handleSubmit(value) {
-        console.log('search', value)
+    handleSearch(value) {
+        const { replaceQuery } = this.props
+        
+        replaceQuery(value)
     }
 
     handleChangeStatus({ id, status }) {
@@ -58,29 +63,45 @@ class MerchantList extends PureComponent {
                 this.handleFetchList();
             })
         });
+    }
 
+    handleChangePage({ current: pageIndex }) {
+        const { updateQuery } = this.props
+
+        updateQuery({ pageIndex })
     }
 
     render() {
-        const { list, total, pageIndex } = this.props
+        const { list, total, pageIndex, pageSize, merchant_name, owner_telephone, startTime, endTime } = this.props
+        const pagination = {
+            pageSize,
+            total,
+            current: pageIndex
+        }
 
         return (
             <section className="merchant-list">
                 <div className="filter-content">
+                    <Filter
+                        merchant_name={merchant_name}
+                        owner_telephone={owner_telephone}
+                        startTime={startTime}
+                        endTime={endTime}
+                        onSearch={this.handleSearch}
+                    />
+                </div>
+                <div className="func-content">
                     <NavLink to="/merchant-edit">
                         <Button type="primary" icon="plus">新增门店</Button>
                     </NavLink>
-                </div>
-                <div className="filter-content">
-                    <Filter
-                        onSubmit={this.handleSubmit}
-                    />
                 </div>
                 <div>
                     <Table
                         bordered
                         columns={this.columns}
                         dataSource={list}
+                        pagination={pagination}
+                        onChange={this.handleChangePage}
                     />
                 </div>
             </section>
@@ -89,16 +110,18 @@ class MerchantList extends PureComponent {
 }
 
 const mapStateToProps = ({ merchantList }, { location }) => {
-    console.log(location.search)
-    const { list, pageIndex, pageSize, total } = merchantList
+    const { list, pageSize, total } = merchantList
+    const { pageIndex, ...others } = URI.parseQuery(location.search);
+
     return {
+        ...others,
         list,
-        pageIndex,
-        total,
-        pageSize
+        pageSize,
+        total: Number(total),
+        pageIndex: Number(pageIndex || 1)
     }
 }
 
-const mapDispatchToProps = { ...actions };
+const mapDispatchToProps = { ...actions, ...router };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MerchantList)

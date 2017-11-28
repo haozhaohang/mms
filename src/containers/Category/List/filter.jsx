@@ -29,12 +29,12 @@ class Filter extends PureComponent {
 
         validateFields((err, fieldsValue) => {
             if (err) return;
-            const { pay_time, ...others } = fieldsValue
+            const { time, ...others } = fieldsValue
 
             onSearch({
                 ...others,
-                startTime: pay_time && pay_time[0] && pay_time[0].unix(),
-                endTime: pay_time && pay_time[1] && pay_time[1].unix()
+                startTime: time && time[0] && time[0].unix(),
+                endTime: time && time[1] && time[1].unix()
             })
         });
     }
@@ -57,25 +57,25 @@ class Filter extends PureComponent {
     }
 
     renderSimpleForm() {
-        const { order_id, status, form: { getFieldDecorator } } = this.props
+        const { name, status, startTime, endTime, form: { getFieldDecorator } } = this.props
 
         return (
             <Form onSubmit={this.handleSearch} layout="inline">
                 <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                     <Col md={8} sm={24}>
-                        <FormItem label="订单编号">
-                            {getFieldDecorator('order_id', { initialValue: order_id })(
+                        <FormItem label="分类名称">
+                            {getFieldDecorator('name', { initialValue: name })(
                                 <Input placeholder="请输入" />
                             )}
                         </FormItem>
                     </Col>
                     <Col md={8} sm={24}>
-                        <FormItem label="订单状态">
+                        <FormItem label="分类状态">
                             {getFieldDecorator('status', { initialValue: status })(
                                 <Select placeholder="请选择">
                                     <Option value="0">全部</Option>
-                                    <Option value="1">已支付</Option>
-                                    <Option value="2">已退款</Option>
+                                    <Option value="10">已上线</Option>
+                                    <Option value="15">已下线</Option>
                                 </Select>
                             )}
                         </FormItem>
@@ -95,43 +95,43 @@ class Filter extends PureComponent {
     }
 
     renderAdvancedForm() {
-        const { order_id, status, startTime, endTime, form: { getFieldDecorator } } = this.props
+        const { name, status, startTime, endTime, form: { getFieldDecorator } } = this.props
 
         return (
             <Form onSubmit={this.handleSearch} layout="inline">
                 <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                     <Col md={8} sm={24}>
-                        <FormItem label="订单编号">
+                        <FormItem label="分类名称">
                             {
-                                getFieldDecorator('order_id', { initialValue: order_id })(
+                                getFieldDecorator('name', { initialValue: name })(
                                     <Input placeholder="请输入" />
                                 )
                             }
                         </FormItem>
                     </Col>
                     <Col md={8} sm={24}>
-                        <FormItem label="订单状态">
+                        <FormItem label="分类状态">
                             {
                                 getFieldDecorator('status', { initialValue: status })(
                                     <Select placeholder="请选择">
                                         <Option value="0">全部</Option>
-                                        <Option value="1">已支付</Option>
-                                        <Option value="2">已退款</Option>
+                                        <Option value="10">已上线</Option>
+                                        <Option value="15">已下线</Option>
                                     </Select>
                                 )
                             }
                         </FormItem>
                     </Col>
                     <Col md={8} sm={24}>
-                        <FormItem label="支付时间">
+                        <FormItem label="创建时间">
                             {
                                 getFieldDecorator(
-                                    'pay_time',
+                                    'time',
                                     { initialValue: [ startTime && moment.unix(startTime), endTime && moment.unix(endTime) ] }
                                 )(
                                     <RangePicker
                                         showTime
-                                        format="YYYY-MM-DD HH:mm:ss"
+                                        format="YYYY-MM-DD"
                                     />
                                 )
                             }

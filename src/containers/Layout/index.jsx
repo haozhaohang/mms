@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react'
-import { Layout, Menu, Icon } from 'antd'
+import { Layout, Menu, Icon, Avatar, Dropdown, Tag, message, Spin } from 'antd'
 import { connect } from 'react-redux';
 
 import sidebarPaths from 'constants/sidebar';
+import HeaderLayout from './headerLayout'
 import PageRoute from './route';
 import './index.css'
 
@@ -55,8 +56,18 @@ class BasicLayout extends PureComponent {
 
     render() {
         const { collapsed } = this.state
-        const { menu, pathname } = this.props
+        const { user, menu, pathname } = this.props
         const { openKeys, selectedKeys } = this.handleQueryMenu();
+        const { user_name } = user;
+
+        const menuList = (
+            <Menu selectedKeys={[]} onClick={this.onMenuClick}>
+                <Menu.Item><Icon type="user" />个人中心</Menu.Item>
+                <Menu.Item><Icon type="setting" />设置</Menu.Item>
+                <Menu.Divider />
+                <Menu.Item key="logout"><Icon type="logout" />退出登录</Menu.Item>
+            </Menu>
+        );
 
         return (
             <Layout className="basic-layout">
@@ -92,14 +103,11 @@ class BasicLayout extends PureComponent {
                 </Sider>
 
                 <Layout>
-                    <Header className="header">
-                        <Icon
-                            className="trigger"
-                            type='menu-fold'
-                            type={collapsed ? 'menu-unfold' : 'menu-fold'}
-                            onClick={this.handleToggle}
-                        />
-                    </Header>
+                    <HeaderLayout
+                        collapsed={collapsed}
+                        userName={user_name}
+                        handleToggle={this.handleToggle}
+                    />
                     <Content className="content">
                         <div><PageRoute/></div>
                     </Content>

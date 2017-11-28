@@ -36,3 +36,7 @@ html, body, #root, .router-content {
     justify-content: center;
     align-items: center;
 }
+
+.ant-dropdown-menu-item {
+    width: 160px;
+}

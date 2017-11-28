@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Icon } from 'antd'
+import moment from 'moment'
 
 import { MERCHANT_STATUS } from 'constants/basic'
 
@@ -31,7 +32,12 @@ export default function(component) {
             },
             {
                 title: '实际支付金额',
-                dataIndex: 'pay_time'
+                dataIndex: 'pay_money'
+            },
+            {
+                title: '支付时间',
+                dataIndex: 'pay_time',
+                render: val => moment.unix(val).format('YYYY-MM-DD HH:mm:ss')
             },
             {
                 title: '状态',

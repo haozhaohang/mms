@@ -1,10 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import thunk from 'redux-thunk';
 import 'babel-polyfill'
 //import styles
-
 import 'normalize.css'
 
 import App from './app';
