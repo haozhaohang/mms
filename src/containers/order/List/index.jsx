@@ -69,8 +69,6 @@ class orderList extends PureComponent {
                 this.handleFetchList();
             })
         });
-        
-        fetchRefund({ order_id, refund_money: pay_money })
     }
 
     handleRepetitionBill({ order_id }) {
@@ -90,7 +88,7 @@ class orderList extends PureComponent {
 
     render() {
         const { list, total, pageSize, pageIndex, order_id, status, startTime, endTime } = this.props
-        console.log(status)
+
         const pagination = {
             pageSize,
             total,

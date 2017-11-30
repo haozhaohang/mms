@@ -23,6 +23,6 @@ export const fetchCategoryInfo = (params ={}) => {
 
 export const fetchCategoryEdit = (params ={}) => {
     const url = params.id ? api.CATEGORY_UPDATE : api.CATEGORY_ADD
-    console.log(params)
+
     return () => post(url, params);
 }

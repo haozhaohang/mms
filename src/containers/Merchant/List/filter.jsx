@@ -101,7 +101,7 @@ class Filter extends PureComponent {
 
     renderAdvancedForm() {
         const { merchant_name, owner_telephone, startTime, endTime, form: { getFieldDecorator } } = this.props
-        console.log(startTime)
+
         return (
             <Form onSubmit={this.handleSearch} layout="inline">
                 <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
