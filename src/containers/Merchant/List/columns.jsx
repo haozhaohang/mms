@@ -38,6 +38,7 @@ export default function(component) {
             {
                 title: '操作',
                 className: 'row-operation',
+                width: 120,
                 render: value => (
                     <div>
                         <NavLink to={`/merchant-edit?id=${value.id}`}>

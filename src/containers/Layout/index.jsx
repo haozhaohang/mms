@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import sidebarPaths from 'constants/sidebar';
 import HeaderLayout from './headerLayout'
 import PageRoute from './route';
+import LogoImg from 'assets/img/logo.png'
 import './index.css'
 
 const SubMenu = Menu.SubMenu;
@@ -76,8 +77,14 @@ class BasicLayout extends PureComponent {
                     collapsible
                     collapsed={collapsed}
                 >
-                    <div className="logo" />
-
+                    <div className="logo">
+                        <img width="26" alt="logo" src={LogoImg} />
+                        {
+                            !collapsed && (
+                                <p>商户中心</p>
+                            )
+                        }
+                    </div>
                     <Menu
                         theme="dark"
                         mode="inline"

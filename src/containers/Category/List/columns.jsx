@@ -32,6 +32,7 @@ export default function(component) {
             {
                 title: '操作',
                 className: 'row-operation',
+                width: 120,
                 render: value => (
                     <div>
                         <Link to={`/category-edit?id=${value.id}`}>

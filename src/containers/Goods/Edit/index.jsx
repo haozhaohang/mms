@@ -39,7 +39,7 @@ class GoodsEdit extends PureComponent {
                 return;
             }
 
-            fetchGoodsEdit(values).then(() => {
+            fetchGoodsEdit({ is_limit: 10, ...values }).then(() => {
                 notification.success({
                     message: '提示信息',
                     description: '保存成功',
@@ -56,8 +56,6 @@ class GoodsEdit extends PureComponent {
             categoryList,
             form: { getFieldDecorator }
         } = this.props;
-        console.log(info.image)
-        const isLimitOptions = Object.entries(GOODS_REPERTORY).map(([key, value]) => ({ label: value, value: key }))
 
         const nameFieldDecorator = getFieldDecorator('name', {
             initialValue: info.name,
@@ -89,13 +87,6 @@ class GoodsEdit extends PureComponent {
 
         const priceFieldDecorator = getFieldDecorator('price', {
             initialValue: info.price,
-            rules: [
-                { required: true, message: '请输入' }
-            ]
-        });
-
-        const isLimitFieldDecorator = getFieldDecorator('is_limit', {
-            initialValue: info.is_limit,
             rules: [
                 { required: true, message: '请输入' }
             ]
@@ -184,14 +175,6 @@ class GoodsEdit extends PureComponent {
                         {
                             priceFieldDecorator(
                                 <Input />
-                            )
-                        }
-                    </FormItem>
-
-                    <FormItem label="是否有库存">
-                        {
-                            isLimitFieldDecorator(
-                                <RadioGroup options={isLimitOptions} />
                             )
                         }
                     </FormItem>

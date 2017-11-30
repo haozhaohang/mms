@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Icon } from 'antd'
 
-import { MERCHANT_STATUS } from 'constants/basic'
+import { GOODS_STATUS } from 'constants/basic'
 
 export default function(component) {
     return [
@@ -17,7 +17,7 @@ export default function(component) {
             },
             {
                 title: '单位',
-                dataIndex: 'uni'
+                dataIndex: 'unit'
             },
             {
                 title: '价格',
@@ -33,8 +33,14 @@ export default function(component) {
                 dataIndex: 'sale_num'
             },
             {
+                title: '状态',
+                dataIndex: 'status',
+                render: val => GOODS_STATUS[val]
+            },
+            {
                 title: '操作',
                 className: 'row-operation',
+                width: 120,
                 render: value => (
                     <div>
                         <NavLink to={`/goods-edit?id=${value.id}`}>
