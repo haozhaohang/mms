@@ -15,9 +15,9 @@ export const fetchCategoryInfo = (params ={}) => {
             } catch (e) {
                 return
             }
-        }
 
-       dispatch(finishCategoryInfo(payload))
+            dispatch(finishCategoryInfo(payload))
+        }
     }
 }
 

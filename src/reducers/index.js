@@ -10,8 +10,9 @@ import categoryList from './categoryList'
 import categoryEdit from './categoryEdit'
 
 import goodsList from './goodsList'
+import goodsEdit from './goodsEdit'
 
-const rootReducer = {
+export default {
     user,
     menu,
     merchantList,
@@ -19,7 +20,6 @@ const rootReducer = {
     orderList,
     categoryList,
     categoryEdit,
-    goodsList
+    goodsList,
+    goodsEdit
 }
-
-export default rootReducer

@@ -115,4 +115,8 @@ const mapStateToProps = ({ goodsList }, { location }) => {
 
 const mapDispatchToProps = { ...actions, ...router };
 
+GoodsList.defaultProps = {
+    status: ''
+}
+
 export default connect(mapStateToProps, mapDispatchToProps)(GoodsList)

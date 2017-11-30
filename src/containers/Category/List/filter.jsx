@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import { Form, Input, InputNumber, DatePicker, Button, Select, Row, Col, Icon } from 'antd';
 import moment from 'moment'
 
+import { CATEGORY_STATUS } from 'constants/basic'
+
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
@@ -59,6 +61,10 @@ class Filter extends PureComponent {
     renderSimpleForm() {
         const { name, status, startTime, endTime, form: { getFieldDecorator } } = this.props
 
+        const statusOptions = Object.entries(CATEGORY_STATUS).map(([ value, label ]) => (
+            <Option key={value} value={String(value)}>{label}</Option>)
+        )
+
         return (
             <Form onSubmit={this.handleSearch} layout="inline">
                 <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
@@ -73,9 +79,8 @@ class Filter extends PureComponent {
                         <FormItem label="分类状态">
                             {getFieldDecorator('status', { initialValue: status })(
                                 <Select placeholder="请选择">
-                                    <Option value="0">全部</Option>
-                                    <Option value="10">已上线</Option>
-                                    <Option value="15">已下线</Option>
+                                    <Option value="">全部</Option>
+                                    {statusOptions}
                                 </Select>
                             )}
                         </FormItem>

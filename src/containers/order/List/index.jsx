@@ -21,8 +21,9 @@ class orderList extends PureComponent {
 
         this.handleFetchList = this.handleFetchList.bind(this)
         this.handleSearch = this.handleSearch.bind(this)
-        this.handleChangeStatus = this.handleChangeStatus.bind(this)
         this.handleChangePage = this.handleChangePage.bind(this)
+        this.handleRefund = this.handleRefund.bind(this)
+        this.handleRepetitionBill = this.handleRepetitionBill.bind(this)
     }
 
     componentDidMount() {
@@ -48,32 +49,48 @@ class orderList extends PureComponent {
         replaceQuery(value)
     }
 
-    handleChangeStatus({ id, status }) {
-        const { fetchMerchantChangeStatus } = this.props
-        const isOn = Number(status) === 10
-
-        confirm({
-            title: `您确定要${isOn ? '下线' : '上线'}门店?`,
-            content: '请谨慎操作!',
-            onOk: () => fetchMerchantChangeStatus({ id, isOn }).then( () => {
-                notification.success({
-                    message: '提示信息',
-                    description: '设置成功'
-                });
-                this.handleFetchList();
-            })
-        });
-    }
-
     handleChangePage({ current: pageIndex }) {
         const { updateQuery } = this.props
 
         updateQuery({ pageIndex })
     }
 
+    handleRefund({ order_id, pay_money }) {
+        const { fetchRefund } = this.props
+
+        confirm({
+            title: `您确定要退款码?`,
+            content: '请谨慎操作!',
+            onOk: () => fetchRefund({ order_id, refund_money: pay_money }).then( () => {
+                notification.success({
+                    message: '提示信息',
+                    description: '退款成功'
+                });
+                this.handleFetchList();
+            })
+        });
+        
+        fetchRefund({ order_id, refund_money: pay_money })
+    }
+
+    handleRepetitionBill({ order_id }) {
+        const { fetchRepeatPrint } = this.props
+
+        confirm({
+            title: `您确定要重打单吗?`,
+            content: '请谨慎操作!',
+            onOk: () => fetchRepeatPrint({ order_id }).then( () => {
+                notification.success({
+                    message: '提示信息',
+                    description: '重打单成功'
+                });
+            })
+        });
+    }
+
     render() {
         const { list, total, pageSize, pageIndex, order_id, status, startTime, endTime } = this.props
-
+        console.log(status)
         const pagination = {
             pageSize,
             total,
@@ -118,5 +135,9 @@ const mapStateToProps = ({ orderList }, { location }) => {
 }
 
 const mapDispatchToProps = { ...actions, ...router };
+
+orderList.defaultProps = {
+    status: ''
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(orderList)

@@ -31,6 +31,11 @@ export default function(component) {
                 dataIndex: 'address'
             },
             {
+                title: '状态',
+                dataIndex: 'status',
+                render: val => MERCHANT_STATUS[val]
+            },
+            {
                 title: '操作',
                 className: 'row-operation',
                 render: value => (

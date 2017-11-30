@@ -10,7 +10,7 @@ html, body, #root {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
-    padding: 140px 0 144px 0;
+    padding: 180px 0 144px 0;
     position: relative;
 
     .top {
@@ -19,6 +19,7 @@ html, body, #root {
         .header {
             height: 50px;
             line-height: 44px;
+            margin-bottom: 30px;
 
             a {
                 text-decoration: none;
@@ -31,7 +32,7 @@ html, body, #root {
 
                 .title {
                     font-size: 33px;
-                    color: rgba(0, 0, 0, 0.85);
+                    color: rgba(0, 0, 0, 0.6);
                     font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
                     font-weight: 600;
                     position: relative;
@@ -40,12 +41,12 @@ html, body, #root {
             }
         }
 
-        .desc {
+        /* .desc {
             font-size: 14px;
             color: rgba(0, 0, 0, 0.45);
             margin-top: 12px;
             margin-bottom: 40px;
-        }
+        } */
 
     }
     .main {

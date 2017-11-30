@@ -53,7 +53,7 @@ class CategoryList extends PureComponent {
         const isOn = Number(status) === 10
 
         confirm({
-            title: `您确定要${isOn ? '下线' : '上线'}门店?`,
+            title: `您确定要${isOn ? '下线' : '上线'}该商品分类?`,
             content: '请谨慎操作!',
             onOk: () => fetchCategoruChangeStatus({ id, isOn }).then( () => {
                 notification.success({
@@ -124,5 +124,9 @@ const mapStateToProps = ({ categoryList }, { location }) => {
 }
 
 const mapDispatchToProps = { ...actions, ...router };
+
+CategoryList.defaultProps = {
+    status: ''
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList)

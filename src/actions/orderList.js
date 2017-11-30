@@ -20,3 +20,15 @@ export const fetchOrderList = (params ={}) => {
     }
 }
 
+// 订单退款
+export const fetchRefund = (params = {}) => {
+    return () => post(api.ORDER_REFUND, params);
+}
+
+
+// 重打单
+export const fetchRepeatPrint= (params = {}) => {
+    return () => post(api.ORDER_PRINT, params);
+}
+
+

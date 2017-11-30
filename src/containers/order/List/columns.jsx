@@ -24,15 +24,18 @@ export default function(component) {
             },
             {
                 title: '总金额',
-                dataIndex: 'total_money'
+                dataIndex: 'total_money',
+                render: val => `${val}元`
             },
             {
                 title: '折扣金额',
-                dataIndex: 'discount_money'
+                dataIndex: 'discount_money',
+                render: val => `${val}元`
             },
             {
                 title: '实际支付金额',
-                dataIndex: 'pay_money'
+                dataIndex: 'pay_money',
+                render: val => `${val}元`
             },
             {
                 title: '支付时间',
@@ -41,7 +44,30 @@ export default function(component) {
             },
             {
                 title: '状态',
-                dataIndex: 'status'
+                dataIndex: 'status_desc'
+            },
+            {
+                title: '操作',
+                className: 'row-operation',
+                render: val => (
+                    <div>
+                        {
+                            Number(val.status) === 8 ? (
+                                <a onClick={() => component.handleRefund(val)}>
+                                    退款
+                                </a>
+                            ) : (
+                                <a disabled>
+                                    已退款
+                                </a>
+                            )
+                        }
+                        
+                        <a onClick={() => component.handleRepetitionBill(val)}>
+                            重打单
+                        </a>
+                    </div>
+                )
             }
         ];
 }

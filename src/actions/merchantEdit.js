@@ -15,9 +15,9 @@ export const fetchMerchantInfo = (params ={}) => {
             } catch (e) {
                 return
             }
+            
+            dispatch(finishMerchantInfo(payload))
         }
-
-       dispatch(finishMerchantInfo(payload))
     }
 }
 

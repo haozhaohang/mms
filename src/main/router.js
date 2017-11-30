@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Provider } from 'react-redux'

@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react'
 import { Layout, Menu, Icon, Avatar, Dropdown, Tag, message, Spin, Modal, Form, Input } from 'antd'
 
+import FormItem from 'components/FormItem'
+
 import './headerLayout.css'
 
 const SubMenu = Menu.SubMenu
-const FormItem = Form.Item
 const { Header } = Layout
 
 class HeaderLayout extends PureComponent {
@@ -24,6 +25,12 @@ class HeaderLayout extends PureComponent {
             this.setState({
                 visible: true
             })
+            return;
+        }
+
+        if (key === 'logout') {
+            location.href = '/login.html'
+            return;
         }
     }
 
@@ -39,7 +46,7 @@ class HeaderLayout extends PureComponent {
 
         const menuList = (
             <Menu onClick={this.handleMenuClick}>
-                <Menu.Item key="center"><Icon type="user" />个人中心</Menu.Item>
+                {/* <Menu.Item key="center"><Icon type="user" />个人中心</Menu.Item> */}
                 <Menu.Item key="password"><Icon type="setting" />修改密码</Menu.Item>
                 <Menu.Divider />
                 <Menu.Item key="logout"><Icon type="logout" />退出登录</Menu.Item>

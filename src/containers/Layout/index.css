@@ -50,13 +50,13 @@
             }
         }
 
-        .func-content {
+        .func-content, .breadcrumb-content {
             padding-bottom: 25px;
         }
 
         .ant-table {
             td.row-operation {
-                a {
+                a, span {
                     margin-right: 10px;
                 }
             }

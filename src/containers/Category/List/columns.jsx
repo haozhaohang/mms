@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Icon } from 'antd'
+import moment from 'moment'
 
-import { MERCHANT_STATUS } from 'constants/basic'
+import { CATEGORY_STATUS } from 'constants/basic'
 
 export default function(component) {
     return [
@@ -16,7 +17,8 @@ export default function(component) {
             },
             {
                 title: '创建时间',
-                dataIndex: 'create_time'
+                dataIndex: 'create_time',
+                render: val => moment.unix(val).format('YYYY-MM-DD')
             },
             {
                 title: '分类顺序',
@@ -24,16 +26,17 @@ export default function(component) {
             },
             {
                 title: '状态',
-                dataIndex: 'status'
+                dataIndex: 'status',
+                render: val => CATEGORY_STATUS[val]
             },
             {
                 title: '操作',
                 className: 'row-operation',
                 render: value => (
                     <div>
-                        <NavLink to={`/category-edit?id=${value.id}`}>
+                        <Link to={`/category-edit?id=${value.id}`}>
                             <Icon type="edit" /> 编辑
-                        </NavLink>
+                        </Link>
                         <a onClick={() => component.handleChangeStatus(value)}>
                             {Number(value.status) === 10 ? '下线' : '上线'}
                         </a>

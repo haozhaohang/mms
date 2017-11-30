@@ -3,3 +3,5 @@ export function equalByProps(obj1, obj2, props) {
 }
 
 export const actionCreator = type => payload => ({ type, payload });
+
+export const phoneReg = /^1[34578]\d{9}$/;

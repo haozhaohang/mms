@@ -1,8 +1,11 @@
 import React, { PureComponent } from 'react';
-import { Form, Input, InputNumber, DatePicker, Button, Row, Col, Icon } from 'antd';
+import { Form, Input, InputNumber, DatePicker, Button, Row, Col, Icon, Select } from 'antd';
 import moment from 'moment'
 
+import { MERCHANT_STATUS } from 'constants/basic'
+
 const FormItem = Form.Item;
+const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
 
 class Filter extends PureComponent {
@@ -58,6 +61,10 @@ class Filter extends PureComponent {
     renderSimpleForm() {
         const { merchant_name, owner_telephone, form: { getFieldDecorator } } = this.props
 
+        const statusOptions = Object.entries(MERCHANT_STATUS).map(([ value, label ]) => (
+            <Option key={value} value={String(value)}>{label}</Option>)
+        )
+
         return (
             <Form onSubmit={this.handleSearch} layout="inline">
                 <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
@@ -69,9 +76,12 @@ class Filter extends PureComponent {
                         </FormItem>
                     </Col>
                     <Col md={8} sm={24}>
-                        <FormItem label="手机号">
-                            {getFieldDecorator('owner_telephone', { initialValue: owner_telephone })(
-                                <Input placeholder="请输入" />
+                        <FormItem label="分类状态">
+                            {getFieldDecorator('status', { initialValue: status })(
+                                <Select placeholder="请选择">
+                                    <Option value="">全部</Option>
+                                    {statusOptions}
+                                </Select>
                             )}
                         </FormItem>
                     </Col>

@@ -34,7 +34,7 @@ class BasicLayout extends PureComponent {
 
         const { history: { push } } = this.props
 
-        push(sidebarPaths[key])
+        push(sidebarPaths[key].path)
     }
 
     handleQueryMenu() {
@@ -89,7 +89,7 @@ class BasicLayout extends PureComponent {
                             menu.map(({ id, name, chidren }) => (
                                 <SubMenu
                                     key={id}
-                                    title={<span><Icon type="mail" /><span>{name}</span></span>}
+                                    title={<span><Icon type={sidebarPaths[id]} /><span>{name}</span></span>}
                                 > 
                                     {
                                         chidren.map(({ id, name, path }) => (

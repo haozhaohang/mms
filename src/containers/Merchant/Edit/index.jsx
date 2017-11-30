@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom'
-import { Button, Form, Input, InputNumber, notification } from 'antd'
+import { NavLink, Link } from 'react-router-dom'
+import { Button, Form, Input, InputNumber, notification, Breadcrumb } from 'antd'
 import URI from 'urijs'
 
 import FormItem from 'components/FormItem'
 import * as actions from 'actions/merchantEdit'
+import { phoneReg } from 'assets/js/util'
 import './index.css'
 
 class MerchantEdit extends PureComponent {
@@ -51,47 +52,57 @@ class MerchantEdit extends PureComponent {
         const merchantNameFieldDecorator = getFieldDecorator('merchant_name', {
             initialValue: info.merchant_name,
             rules: [
-                { required: true, max: 100, message: '请输入商品名称，不超过 100 个字' }
+                { required: true, max: 100, message: '请输入' }
             ]
         });
 
         const ownerNameFieldDecorator = getFieldDecorator('owner_name', {
             initialValue: info.owner_name,
             rules: [
-                { required: true, max: 100, message: '请输入商品名称，不超过 100 个字' }
+                { required: true, max: 100, message: '请输入' }
             ]
         });
 
         const ownerTelephoneFieldDecorator = getFieldDecorator('owner_telephone', {
             initialValue: info.owner_telephone,
             rules: [
-                { required: true, max: 100, message: '请输入商品名称，不超过 100 个字' }
+                { required: true, max: 100, message: '请输入' },
+                { pattern: phoneReg, message: '手机格式错误' }
             ]
         });
 
         const telFieldDecorator = getFieldDecorator('tel', {
             initialValue: info.tel,
             rules: [
-                { required: true, message: '请输入商品名称' }
+                { required: true, message: '请输入' }
             ]
         });
 
         const machinesFieldDecorator = getFieldDecorator('machines', {
             initialValue: info.machines,
             rules: [
-                { required: true, message: '请输入商品名称，不超过 100 个字' }
+                { required: true, message: '请输入' }
             ]
         });
 
         const addressFieldDecorator = getFieldDecorator('address', {
             initialValue: info.address,
             rules: [
-                { required: true, message: '请输入商品名称，不超过 100 个字' }
+                { required: true, message: '请输入' }
             ]
         });
 
         return (
             <section className="merchant-edit">
+                <div className="breadcrumb-content">
+                    <Breadcrumb>
+                        <Breadcrumb.Item>
+                            <Link to="/merchant-list">门店列表</Link>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>门店编辑</Breadcrumb.Item>
+                    </Breadcrumb>
+                </div>
+
                 <Form layout="horizontal">
 
                     <FormItem label="门店名称">
@@ -102,7 +113,7 @@ class MerchantEdit extends PureComponent {
                         }
                     </FormItem>
 
-                    <FormItem label="门店名称2">
+                    <FormItem label="管理员名称">
                         {
                             ownerNameFieldDecorator(
                                 <Input />
@@ -110,7 +121,7 @@ class MerchantEdit extends PureComponent {
                         }
                     </FormItem>
 
-                    <FormItem label="手机号">
+                    <FormItem label="管理员手机号">
                         {
                             ownerTelephoneFieldDecorator(
                                 <Input />
@@ -118,7 +129,7 @@ class MerchantEdit extends PureComponent {
                         }
                     </FormItem>
 
-                    <FormItem label="座机号">
+                    <FormItem label="门店电话">
                         {
                             telFieldDecorator(
                                 <Input />

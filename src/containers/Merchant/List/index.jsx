@@ -124,4 +124,8 @@ const mapStateToProps = ({ merchantList }, { location }) => {
 
 const mapDispatchToProps = { ...actions, ...router };
 
+MerchantList.defaultProps = {
+    status: ''
+}
+
 export default connect(mapStateToProps, mapDispatchToProps)(MerchantList)

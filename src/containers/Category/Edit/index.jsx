@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom'
-import { Button, Form, Input, InputNumber, notification } from 'antd'
+import { NavLink, Link } from 'react-router-dom'
+import { Button, Form, Input, InputNumber, notification, Breadcrumb } from 'antd'
 import URI from 'urijs'
 
 import FormItem from 'components/FormItem'
@@ -73,6 +73,15 @@ class CategoryEdit extends PureComponent {
 
         return (
             <section className="merchant-edit">
+                <div className="breadcrumb-content">
+                    <Breadcrumb>
+                        <Breadcrumb.Item>
+                            <Link to="/category-list">分类列表</Link>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>分类编辑</Breadcrumb.Item>
+                    </Breadcrumb>
+                </div>
+                
                 <Form layout="horizontal">
 
                     <FormItem label="商品分类名称">

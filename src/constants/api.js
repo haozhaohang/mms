@@ -2,6 +2,10 @@ const prefix = '/api';
 
 // 登陆
 export const ACCOUNT_LOGIN = `${prefix}/site/login`
+
+// 图片上传
+export const UPLOAD_FILE = `${prefix}/home/upload`
+
 // 基础信息
 export const ACCOUNT_INFO = `${prefix}/home/index`
 
@@ -15,6 +19,8 @@ export const MERCHANT_OFF_STATUS = `${prefix}/merchant/off`
 
 // 订单管理
 export const ORDER_LIST = `${prefix}/order/clist`
+export const ORDER_REFUND = `${prefix}/order/refund`
+export const ORDER_PRINT = `${prefix}/order/repeat-print`
 
 // 商品分类管理
 export const CATEGORY_LIST = `${prefix}/category/clist`
@@ -28,3 +34,6 @@ export const CATEGORY_OFF_STATUS = `${prefix}/category/off`
 export const GOODS_LIST = `${prefix}/goods/clist`
 export const GOODS_ON_STATUS = `${prefix}/goods/on`
 export const GOODS_OFF_STATUS = `${prefix}/goods/off`
+export const GOODS_INFO = `${prefix}/goods/info`
+export const GOODS_ADD = `${prefix}/goods/add`
+export const GOODS_UPDATE = `${prefix}/goods/update`

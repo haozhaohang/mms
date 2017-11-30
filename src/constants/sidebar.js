@@ -1,6 +1,21 @@
 export default {
-    2: '/category-list',
-    3: '/goods-list',
-    5: '/merchant-list',
-    7: '/order-list'
+    1: 'pushpin',
+    2: {
+        path: '/category-list',
+        icon: 'mail'
+    },
+    3: {
+        path: '/goods-list',
+        icon: 'mail'
+    },
+    4: 'rocket',
+    5: {
+        path: '/merchant-list',
+        icon: 'mail'
+    },
+    6: 'switcher',
+    7: {
+        path: '/order-list',
+        icon: 'mail'
+    },
 };
