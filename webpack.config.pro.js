@@ -45,12 +45,15 @@ module.exports = {
 
     entry: {
         vendor: [
+            'babel-polyfill',
             'moment',
             'react',
             'react-dom',
+            'history',
             'classnames',
             'react-redux',
             'react-router',
+            'react-router-dom',
             'react-router-redux',
             'redux',
             'redux-thunk',
@@ -114,6 +117,10 @@ module.exports = {
             'process.env': {
                 'NODE_ENV': JSON.stringify(NODE_ENV)
             }
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks: Infinity
         })
     ],
 }
