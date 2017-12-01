@@ -4,12 +4,13 @@ import { actionCreator } from 'assets/js/util'
 import { get, post } from 'assets/js/request'
 
 const finishGoodsList = actionCreator(actionTypes.GOODS_LIST_SUC)
+const addLoading = actionCreator(actionTypes.GOODS_ADD_LOADING)
 
 // 门店列表
 export const fetchGoodsList = (params ={}) => {
     return async (dispatch) => {
         let payload = {};
-
+        dispatch(addLoading())
         try {
             payload = await get(api.GOODS_LIST, params);
         } catch (e) {

@@ -37,9 +37,9 @@ class CategoryList extends PureComponent {
     }
 
     handleFetchList() {
-        const { page, page_size, name, status, start_time, end_time, fetchCategoryList } = this.props
+        const { page, pageSize, name, status, start_time, end_time, fetchCategoryList } = this.props
 
-        fetchCategoryList({ page, page_size, name, status, start_time, end_time });
+        fetchCategoryList({ page, name, status, start_time, end_time, page_size: pageSize });
     }
 
     handleSearch(value) {
@@ -72,11 +72,11 @@ class CategoryList extends PureComponent {
     }
 
     render() {
-        const { list, total, page, page_size, name, status, start_time, end_time } = this.props
+        const { list, total, page, pageSize, loading, name, status, start_time, end_time } = this.props
 
         const pagination = {
-            page_size,
             total,
+            pageSize,
             current: page
         }
 
@@ -99,6 +99,7 @@ class CategoryList extends PureComponent {
                 <div>
                     <Table
                         bordered
+                        loading={loading}
                         columns={this.columns}
                         dataSource={list}
                         pagination={pagination}
@@ -111,13 +112,14 @@ class CategoryList extends PureComponent {
 }
 
 const mapStateToProps = ({ categoryList }, { location }) => {
-    const { list, pageSize, total } = categoryList
+    const { list, pageSize, total, loading } = categoryList
     const { page, ...others } = URI.parseQuery(location.search)
-
+    
     return {
         ...others,
         list,
-        page_size: pageSize,
+        loading,
+        pageSize: pageSize,
         total: Number(total),
         page: Number(page || 1)
     }

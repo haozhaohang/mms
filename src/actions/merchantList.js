@@ -4,12 +4,13 @@ import { actionCreator } from 'assets/js/util'
 import { get, post } from 'assets/js/request'
 
 const finishMerchantList = actionCreator(actionTypes.MERCHANT_LIST_SUC)
+const addLoading = actionCreator(actionTypes.MERCHANT_ADD_LOADING)
 
 // 门店列表
 export const fetchMerchantList = (params ={}) => {
     return async (dispatch) => {
         let payload = {};
-
+        dispatch(addLoading())
         try {
             payload = await get(api.MERCHANT_LIST, params);
         } catch (e) {

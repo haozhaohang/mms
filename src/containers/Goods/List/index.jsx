@@ -38,15 +38,15 @@ class GoodsList extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        if (equalByProps(this.props, prevProps, ['page'])) {
+        if (equalByProps(this.props, prevProps, ['page', 'name', 'status'])) {
             this.handleFetchList()
         }
     }
 
     handleFetchList() {
-        const { page, page_size, name, status, fetchGoodsList } = this.props
+        const { page, pageSize, name, status, fetchGoodsList } = this.props
 
-        fetchGoodsList({ page, page_size, name, status });
+        fetchGoodsList({ page, name, status, page_size: pageSize });
     }
 
     handleSearch(value) {
@@ -102,7 +102,13 @@ class GoodsList extends PureComponent {
 
     render() {
         const { inventory, rowVal } = this.state
-        const { list, total, page, name, status } = this.props
+        const { list, total, page, pageSize, loading, name, status } = this.props
+
+        const pagination = {
+            total,
+            pageSize,
+            current: page
+        }
 
         return (
             <section className="merchant-list">
@@ -120,8 +126,11 @@ class GoodsList extends PureComponent {
                 </div>
                 <Table
                     bordered
+                    loading={loading}
                     columns={this.columns}
                     dataSource={list}
+                    pagination={pagination}
+                    onChange={this.handleChangePage}
                 />
                 <InventoryModal
                     visible={inventory}
@@ -135,13 +144,14 @@ class GoodsList extends PureComponent {
 }
 
 const mapStateToProps = ({ goodsList }, { location }) => {
-    const { list, pageSize, total } = goodsList
+    const { list, pageSize, total, loading } = goodsList
     const { page, ...others } = URI.parseQuery(location.search)
 
     return {
         ...others,
         list,
-        page_size: pageSize,
+        pageSize,
+        loading,
         total: Number(total),
         page: Number(page || 1)
     }

@@ -4,7 +4,8 @@ const initState = {
     list: [],
     total: 0,
     pageIndex: 1,
-    pageSize: 10
+    pageSize: 10,
+    loading: false
 }
 
 export default function orderList (state = initState, { type, payload }) {
@@ -16,7 +17,15 @@ export default function orderList (state = initState, { type, payload }) {
             ...state,
             list,
             total: count,
-            pageIndex: page
+            pageIndex: page,
+            loading: false
+        }
+    }
+
+    case actionTypes.ORDER_ADD_LOADING: {
+        return {
+            ...state,
+            loading: true
         }
     }
 

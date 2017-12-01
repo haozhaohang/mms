@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button, Table, Modal, notification } from 'antd'
 import URI from 'urijs'
 
@@ -37,9 +37,9 @@ class MerchantList extends PureComponent {
     }
 
     handleFetchList() {
-        const { page, page_size, merchant_name, owner_telephone, start_time, end_time, fetchMerchantList } = this.props
+        const { page, pageSize, merchant_name, owner_telephone, start_time, end_time, fetchMerchantList } = this.props
 
-        fetchMerchantList({ page, page_size, merchant_name, owner_telephone, start_time, end_time });
+        fetchMerchantList({ page, merchant_name, owner_telephone, start_time, end_time, page_size: pageSize });
     }
 
     handleSearch(value) {
@@ -72,9 +72,9 @@ class MerchantList extends PureComponent {
     }
 
     render() {
-        const { list, total, page, page_size, merchant_name, owner_telephone, start_time, end_time } = this.props
+        const { list, total, page, pageSize, loading, merchant_name, owner_telephone, start_time, end_time } = this.props
         const pagination = {
-            page_size,
+            pageSize,
             total,
             current: page
         }
@@ -91,13 +91,14 @@ class MerchantList extends PureComponent {
                     />
                 </div>
                 <div className="func-content">
-                    <NavLink to="/merchant-edit">
+                    <Link to="/merchant-edit">
                         <Button type="primary" icon="plus">新增门店</Button>
-                    </NavLink>
+                    </Link>
                 </div>
                 <div>
                     <Table
                         bordered
+                        loading={loading}
                         columns={this.columns}
                         dataSource={list}
                         pagination={pagination}
@@ -110,13 +111,14 @@ class MerchantList extends PureComponent {
 }
 
 const mapStateToProps = ({ merchantList }, { location }) => {
-    const { list, pageSize, total } = merchantList
+    const { list, pageSize, total, loading } = merchantList
     const { page, ...others } = URI.parseQuery(location.search);
 
     return {
         ...others,
         list,
-        page_size: pageSize,
+        loading,
+        pageSize,
         total: Number(total),
         page: Number(page || 1)
     }

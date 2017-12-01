@@ -38,9 +38,9 @@ class orderList extends PureComponent {
     }
 
     handleFetchList() {
-        const { page, page_size, order_id, status, machine_no, start_time, end_time, fetchOrderList } = this.props
+        const { page, pageSize, order_id, status, machine_no, start_time, end_time, fetchOrderList } = this.props
    
-        fetchOrderList({ page, page_size, order_id, status, machine_no, start_time, end_time });
+        fetchOrderList({ page, order_id, status, machine_no, start_time, end_time, page_size: pageSize });
     }
 
     handleSearch(value) {
@@ -87,10 +87,10 @@ class orderList extends PureComponent {
     }
 
     render() {
-        const { list, total, page_size, page, order_id, status, machine_no, start_time, end_time } = this.props
+        const { list, total, pageSize, page, loading, order_id, status, machine_no, start_time, end_time } = this.props
 
         const pagination = {
-            page_size,
+            pageSize,
             total,
             current: page
         }
@@ -109,6 +109,7 @@ class orderList extends PureComponent {
                 <div>
                     <Table
                         bordered
+                        loading={loading}
                         columns={this.columns}
                         dataSource={list}
                         pagination={pagination}
@@ -121,13 +122,14 @@ class orderList extends PureComponent {
 }
 
 const mapStateToProps = ({ orderList }, { location }) => {
-    const { list, pageSize, total } = orderList
+    const { list, pageSize, total, loading } = orderList
     const { page, ...others } = URI.parseQuery(location.search)
 
     return {
         ...others,
         list,
-        page_size: pageSize,
+        loading,
+        pageSize,
         total: Number(total),
         page: Number(page || 1)
     }
