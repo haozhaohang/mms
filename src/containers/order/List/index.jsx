@@ -31,16 +31,16 @@ class orderList extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        if (equalByProps(this.props, prevProps, ['page', 'order_id', 'status', 'start_time', 'end_time'])) {
+        if (equalByProps(this.props, prevProps, ['page', 'order_id', 'status', 'machine_no', 'start_time', 'end_time'])) {
 
             this.handleFetchList()
         }
     }
 
     handleFetchList() {
-        const { page, page_size, order_id, status, start_time, end_time, fetchOrderList } = this.props
+        const { page, page_size, order_id, status, machine_no, start_time, end_time, fetchOrderList } = this.props
    
-        fetchOrderList({ page, page_size, order_id, status, start_time, end_time });
+        fetchOrderList({ page, page_size, order_id, status, machine_no, start_time, end_time });
     }
 
     handleSearch(value) {
@@ -87,7 +87,7 @@ class orderList extends PureComponent {
     }
 
     render() {
-        const { list, total, page_size, page, order_id, status, start_time, end_time } = this.props
+        const { list, total, page_size, page, order_id, status, machine_no, start_time, end_time } = this.props
 
         const pagination = {
             page_size,
@@ -101,6 +101,7 @@ class orderList extends PureComponent {
                         onSearch={this.handleSearch}
                         order_id={order_id}
                         status={status}
+                        machine_no={machine_no}
                         start_time={start_time}
                         end_time={end_time}
                     />

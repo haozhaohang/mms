@@ -99,7 +99,7 @@ class Filter extends PureComponent {
     }
 
     renderAdvancedForm() {
-        const { order_id, status, start_time, end_time, form: { getFieldDecorator } } = this.props
+        const { order_id, status, machine_no, start_time, end_time, form: { getFieldDecorator } } = this.props
 
         return (
             <Form onSubmit={this.handleSearch} layout="inline">
@@ -126,6 +126,20 @@ class Filter extends PureComponent {
                             }
                         </FormItem>
                     </Col>
+                    <Col md={8} sm={24}>
+                        <FormItem label="机器号">
+                            {
+                                getFieldDecorator(
+                                    'machine_no',
+                                    { initialValue: machine_no }
+                                )(
+                                    <Input placeholder="请输入" />
+                                )
+                            }
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                     <Col md={8} sm={24}>
                         <FormItem label="支付时间">
                             {

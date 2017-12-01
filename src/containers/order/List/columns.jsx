@@ -16,6 +16,10 @@ export default function(component) {
                 dataIndex: 'user_name'
             },
             {
+                title: '机器号',
+                dataIndex: 'machine_no'
+            },
+            {
                 title: '购买商品',
                 dataIndex: 'order_item',
                 render: (val = []) => val.map(({ goods_name, goods_num }, index) => (
