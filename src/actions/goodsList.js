@@ -21,10 +21,13 @@ export const fetchGoodsList = (params ={}) => {
 }
 
 // 切换单品状态
-export const fetchMerchantChangeStatus = (params = {}) => {
+export const fetchGoodsChangeStatus = (params = {}) => {
     const url = params.isOn ? api.GOODS_OFF_STATUS : api.GOODS_ON_STATUS
 
     return async () => await post(url, params)
 }
 
-
+// 单品库存设置
+export const fetchGoodsInventory = (params = {}) => {    
+    return () => post(api.GOODS_INVENTORY, params)
+}

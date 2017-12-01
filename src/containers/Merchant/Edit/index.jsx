@@ -25,14 +25,14 @@ class MerchantEdit extends PureComponent {
     handleSubmit(e) {
         e.preventDefault();
 
-        const { info, form, history, fetchMerchantEdit } = this.props;
+        const { id, info, form, history, fetchMerchantEdit } = this.props;
 
         form.validateFields((errors, values) => {
             if (errors) {
                 return;
             }
 
-            fetchMerchantEdit(values).then(() => {
+            fetchMerchantEdit({ id, ...values }).then(() => {
                 notification.success({
                     message: '提示信息',
                     description: '保存成功',

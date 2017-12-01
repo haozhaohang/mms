@@ -3,6 +3,9 @@ const prefix = '/api';
 // 登陆
 export const ACCOUNT_LOGIN = `${prefix}/site/login`
 
+// 注销
+export const ACCOUNT_LOGOUT = `${prefix}/site/logout`
+
 // 图片上传
 export const UPLOAD_FILE = `${prefix}/home/upload`
 
@@ -37,3 +40,4 @@ export const GOODS_OFF_STATUS = `${prefix}/goods/off`
 export const GOODS_INFO = `${prefix}/goods/info`
 export const GOODS_ADD = `${prefix}/goods/add`
 export const GOODS_UPDATE = `${prefix}/goods/update`
+export const GOODS_INVENTORY = `${prefix}/goods/increase`

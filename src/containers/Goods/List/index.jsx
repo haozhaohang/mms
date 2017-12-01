@@ -8,7 +8,8 @@ import { equalByProps } from 'assets/js/util'
 import * as actions from 'actions/goodsList'
 import * as router from 'actions/router'
 import columns from './columns'
-import Filter from './filter';
+import Filter from './filter'
+import InventoryModal from './inventoryModal'
 
 import './index.css'
 
@@ -18,11 +19,17 @@ class GoodsList extends PureComponent {
     constructor(props) {
         super(props)
 
+        this.state = {
+            inventory: false,
+            rowVal: {}
+        }
+
         this.columns = columns(this)
 
         this.handleFetchList = this.handleFetchList.bind(this)
         this.handleSearch = this.handleSearch.bind(this)
         this.handleChangeStatus = this.handleChangeStatus.bind(this)
+        this.handleInventory = this.handleInventory.bind(this)
         this.handleChangePage = this.handleChangePage.bind(this)
     }
 
@@ -49,13 +56,13 @@ class GoodsList extends PureComponent {
     }
 
     handleChangeStatus({ id, status }) {
-        const { fetchMerchantChangeStatus } = this.props
+        const { fetchGoodsChangeStatus } = this.props
         const isOn = Number(status) === 10
 
         confirm({
             title: `您确定要${isOn ? '下线' : '上线'}门店?`,
             content: '请谨慎操作!',
-            onOk: () => fetchMerchantChangeStatus({ id, isOn }).then( () => {
+            onOk: () => fetchGoodsChangeStatus({ id, isOn }).then( () => {
                 notification.success({
                     message: '提示信息',
                     description: '设置成功'
@@ -71,7 +78,30 @@ class GoodsList extends PureComponent {
         updateQuery({ pageIndex })
     }
 
+    handleInventory(value) {
+        const { fetchGoodsInventory } = this.props
+
+        fetchGoodsInventory(value).then(
+            () => {
+                notification.success({
+                    message: '提示信息',
+                    description: '库存设置成功'
+                });
+
+                this.handleState({ inventory: false })
+                this.handleFetchList();
+            }
+        )
+    }
+
+    handleState(rest) {
+        this.setState({
+            ...rest
+        })
+    }
+
     render() {
+        const { inventory, rowVal } = this.state
         const { list, total, pageIndex, name, status } = this.props
 
         return (
@@ -88,13 +118,17 @@ class GoodsList extends PureComponent {
                         <Button type="primary" icon="plus">新增单品</Button>
                     </NavLink>
                 </div>
-                <div>
-                    <Table
-                        bordered
-                        columns={this.columns}
-                        dataSource={list}
-                    />
-                </div>
+                <Table
+                    bordered
+                    columns={this.columns}
+                    dataSource={list}
+                />
+                <InventoryModal
+                    visible={inventory}
+                    value={rowVal}
+                    onOk={this.handleInventory}
+                    onCancel={() => this.handleState({ inventory: false })}
+                />
             </section>
         )
     }

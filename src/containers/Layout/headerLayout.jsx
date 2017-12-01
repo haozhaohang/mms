@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 import { Layout, Menu, Icon, Avatar, Dropdown, Tag, message, Spin, Modal, Form, Input } from 'antd'
 
+import { LOGIN_URL } from 'constants/basic';
 import FormItem from 'components/FormItem'
-
 import './headerLayout.css'
 
 const SubMenu = Menu.SubMenu
@@ -29,7 +29,7 @@ class HeaderLayout extends PureComponent {
         }
 
         if (key === 'logout') {
-            location.href = '/login.html'
+            location.href = LOGIN_URL;
             return;
         }
     }

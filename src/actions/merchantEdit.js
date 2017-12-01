@@ -22,7 +22,7 @@ export const fetchMerchantInfo = (params ={}) => {
 }
 
 export const fetchMerchantEdit = (params ={}) => {
-    const url = params.merchantId ? api.MERCHANT_UPDATE : api.MERCHANT_ADD
+    const url = params.id ? api.MERCHANT_UPDATE : api.MERCHANT_ADD
 
     return () => post(url, params);
 }

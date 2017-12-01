@@ -40,7 +40,7 @@ export default function(component) {
             {
                 title: '操作',
                 className: 'row-operation',
-                width: 120,
+                width: 160,
                 render: value => (
                     <div>
                         <NavLink to={`/goods-edit?id=${value.id}`}>
@@ -48,6 +48,9 @@ export default function(component) {
                         </NavLink>
                         <a onClick={() => component.handleChangeStatus(value)}>
                             {Number(value.status) === 10 ? '下线' : '上线'}
+                        </a>
+                        <a onClick={() => component.handleState({ inventory: true, rowVal: value })}>
+                            添加库存
                         </a>
                     </div>
                 )
