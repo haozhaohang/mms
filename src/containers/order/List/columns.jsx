@@ -47,6 +47,11 @@ export default function(component) {
                 render: val => moment.unix(val).format('YYYY-MM-DD HH:mm:ss')
             },
             {
+                title: '退款金额',
+                dataIndex: 'refund_money',
+                render: val => `${val}元`
+            }
+            {
                 title: '状态',
                 dataIndex: 'status_desc'
             },
