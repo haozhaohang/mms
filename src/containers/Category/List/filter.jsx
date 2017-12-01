@@ -35,8 +35,8 @@ class Filter extends PureComponent {
 
             onSearch({
                 ...others,
-                startTime: time && time[0] && time[0].unix(),
-                endTime: time && time[1] && time[1].unix()
+                start_time: time && time[0] && time[0].unix(),
+                end_time: time && time[1] && time[1].unix()
             })
         });
     }
@@ -59,7 +59,7 @@ class Filter extends PureComponent {
     }
 
     renderSimpleForm() {
-        const { name, status, startTime, endTime, form: { getFieldDecorator } } = this.props
+        const { name, status, start_time, end_time, form: { getFieldDecorator } } = this.props
 
         const statusOptions = Object.entries(CATEGORY_STATUS).map(([ value, label ]) => (
             <Option key={value} value={String(value)}>{label}</Option>)
@@ -100,7 +100,7 @@ class Filter extends PureComponent {
     }
 
     renderAdvancedForm() {
-        const { name, status, startTime, endTime, form: { getFieldDecorator } } = this.props
+        const { name, status, start_time, end_time, form: { getFieldDecorator } } = this.props
 
         return (
             <Form onSubmit={this.handleSearch} layout="inline">
@@ -132,7 +132,7 @@ class Filter extends PureComponent {
                             {
                                 getFieldDecorator(
                                     'time',
-                                    { initialValue: [ startTime && moment.unix(startTime), endTime && moment.unix(endTime) ] }
+                                    { initialValue: [ start_time && moment.unix(start_time), end_time && moment.unix(end_time) ] }
                                 )(
                                     <RangePicker
                                         showTime

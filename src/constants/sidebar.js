@@ -18,4 +18,9 @@ export default {
         path: '/order-list',
         icon: 'mail'
     },
+    8: 'switcher',
+    9: {
+        path: '/stat-list',
+        icon: 'mail'
+    },
 };

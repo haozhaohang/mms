@@ -38,15 +38,15 @@ class GoodsList extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        if (equalByProps(this.props, prevProps, ['pageIndex'])) {
+        if (equalByProps(this.props, prevProps, ['page'])) {
             this.handleFetchList()
         }
     }
 
     handleFetchList() {
-        const { pageIndex, pageSize, name, status, fetchGoodsList } = this.props
+        const { page, page_size, name, status, fetchGoodsList } = this.props
 
-        fetchGoodsList({ pageIndex, pageSize, name, status });
+        fetchGoodsList({ page, page_size, name, status });
     }
 
     handleSearch(value) {
@@ -72,10 +72,10 @@ class GoodsList extends PureComponent {
         });
     }
 
-    handleChangePage({ current: pageIndex }) {
+    handleChangePage({ current: page }) {
         const { updateQuery } = this.props
 
-        updateQuery({ pageIndex })
+        updateQuery({ page })
     }
 
     handleInventory(value) {
@@ -102,7 +102,7 @@ class GoodsList extends PureComponent {
 
     render() {
         const { inventory, rowVal } = this.state
-        const { list, total, pageIndex, name, status } = this.props
+        const { list, total, page, name, status } = this.props
 
         return (
             <section className="merchant-list">
@@ -136,14 +136,14 @@ class GoodsList extends PureComponent {
 
 const mapStateToProps = ({ goodsList }, { location }) => {
     const { list, pageSize, total } = goodsList
-    const { pageIndex, ...others } = URI.parseQuery(location.search)
+    const { page, ...others } = URI.parseQuery(location.search)
 
     return {
         ...others,
         list,
-        pageSize,
+        page_size: pageSize,
         total: Number(total),
-        pageIndex: Number(pageIndex || 1)
+        page: Number(page || 1)
     }
 }
 

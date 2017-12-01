@@ -12,6 +12,8 @@ import CategoryList from 'containers/Category/List'
 import GoodsList from 'containers/Goods/List'
 import GoodsEdit from 'containers/Goods/Edit'
 
+import StatList from 'containers/Stat/List'
+
 export default () => (
     <Switch>
         <Route path="/merchant-list" component={MerchantList} />
@@ -21,5 +23,6 @@ export default () => (
         <Route path="/category-edit" component={CategoryEdit} />
         <Route path="/goods-list" component={GoodsList} />
         <Route path="/goods-edit" component={GoodsEdit} />
+        <Route path="/stat-list" component={StatList} />
     </Switch>
 );

@@ -45,8 +45,6 @@ export default async function initializeState() {
         user_info
     } = await get(api.ACCOUNT_INFO);
 
-
-
     const newMenu = setSidebarPath(menu);
 
     return { menu: newMenu, user: user_info };

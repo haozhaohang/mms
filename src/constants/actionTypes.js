@@ -13,3 +13,6 @@ export const GOODS_CATEGORY_SUC = 'GOODS_CATEGORY_SUC'
 // 单品管理
 export const GOODS_LIST_SUC = 'GOODS_LIST_SUC'
 export const GOODS_INFO_SUC = 'GOODS_INFO_SUC'
+
+// 统计管理
+export const STAT_LIST_SUC = 'STAT_LIST_SUC'

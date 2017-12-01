@@ -31,15 +31,15 @@ class CategoryList extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        if (equalByProps(this.props, prevProps, ['pageIndex', 'name',  'status', 'startTime', 'endTime'])) {
+        if (equalByProps(this.props, prevProps, ['page', 'name',  'status', 'start_time', 'end_time'])) {
             this.handleFetchList()
         }
     }
 
     handleFetchList() {
-        const { pageIndex, pageSize, name, status, startTime, endTime, fetchCategoryList } = this.props
+        const { page, page_size, name, status, start_time, end_time, fetchCategoryList } = this.props
 
-        fetchCategoryList({ pageIndex, pageSize, name, status, startTime, endTime });
+        fetchCategoryList({ page, page_size, name, status, start_time, end_time });
     }
 
     handleSearch(value) {
@@ -65,19 +65,19 @@ class CategoryList extends PureComponent {
         });
     }
 
-    handleChangePage({ current: pageIndex }) {
+    handleChangePage({ current: page }) {
         const { updateQuery } = this.props
 
-        updateQuery({ pageIndex })
+        updateQuery({ page })
     }
 
     render() {
-        const { list, total, pageIndex, pageSize, name, status, startTime, endTime } = this.props
+        const { list, total, page, page_size, name, status, start_time, end_time } = this.props
 
         const pagination = {
-            pageSize,
+            page_size,
             total,
-            current: pageIndex
+            current: page
         }
 
         return (
@@ -86,8 +86,8 @@ class CategoryList extends PureComponent {
                     <Filter
                         name={name}
                         status={status}
-                        startTime={startTime}
-                        endTime={endTime}
+                        start_time={start_time}
+                        end_time={end_time}
                         onSearch={this.handleSearch}
                     />
                 </div>
@@ -112,14 +112,14 @@ class CategoryList extends PureComponent {
 
 const mapStateToProps = ({ categoryList }, { location }) => {
     const { list, pageSize, total } = categoryList
-    const { pageIndex, ...others } = URI.parseQuery(location.search)
+    const { page, ...others } = URI.parseQuery(location.search)
 
     return {
         ...others,
         list,
-        pageSize,
+        page_size: pageSize,
         total: Number(total),
-        pageIndex: Number(pageIndex || 1)
+        page: Number(page || 1)
     }
 }
 

@@ -31,15 +31,15 @@ class MerchantList extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        if (equalByProps(this.props, prevProps, ['pageIndex', 'merchant_name',  'owner_telephone',  'startTime', 'endTime'])) {
+        if (equalByProps(this.props, prevProps, ['page', 'merchant_name',  'owner_telephone',  'start_time', 'end_time'])) {
             this.handleFetchList()
         }
     }
 
     handleFetchList() {
-        const { pageIndex, pageSize, merchant_name, owner_telephone, startTime, endTime, fetchMerchantList } = this.props
+        const { page, page_size, merchant_name, owner_telephone, start_time, end_time, fetchMerchantList } = this.props
 
-        fetchMerchantList({ pageIndex, pageSize, merchant_name, owner_telephone, startTime, endTime });
+        fetchMerchantList({ page, page_size, merchant_name, owner_telephone, start_time, end_time });
     }
 
     handleSearch(value) {
@@ -65,18 +65,18 @@ class MerchantList extends PureComponent {
         });
     }
 
-    handleChangePage({ current: pageIndex }) {
+    handleChangePage({ current: page }) {
         const { updateQuery } = this.props
 
-        updateQuery({ pageIndex })
+        updateQuery({ page })
     }
 
     render() {
-        const { list, total, pageIndex, pageSize, merchant_name, owner_telephone, startTime, endTime } = this.props
+        const { list, total, page, page_size, merchant_name, owner_telephone, start_time, end_time } = this.props
         const pagination = {
-            pageSize,
+            page_size,
             total,
-            current: pageIndex
+            current: page
         }
 
         return (
@@ -85,8 +85,8 @@ class MerchantList extends PureComponent {
                     <Filter
                         merchant_name={merchant_name}
                         owner_telephone={owner_telephone}
-                        startTime={startTime}
-                        endTime={endTime}
+                        start_time={start_time}
+                        end_time={end_time}
                         onSearch={this.handleSearch}
                     />
                 </div>
@@ -111,14 +111,14 @@ class MerchantList extends PureComponent {
 
 const mapStateToProps = ({ merchantList }, { location }) => {
     const { list, pageSize, total } = merchantList
-    const { pageIndex, ...others } = URI.parseQuery(location.search);
+    const { page, ...others } = URI.parseQuery(location.search);
 
     return {
         ...others,
         list,
-        pageSize,
+        page_size: pageSize,
         total: Number(total),
-        pageIndex: Number(pageIndex || 1)
+        page: Number(page || 1)
     }
 }
 

@@ -41,3 +41,6 @@ export const GOODS_INFO = `${prefix}/goods/info`
 export const GOODS_ADD = `${prefix}/goods/add`
 export const GOODS_UPDATE = `${prefix}/goods/update`
 export const GOODS_INVENTORY = `${prefix}/goods/increase`
+
+// 统计管理
+export const STAT_LIST = `${prefix}/stat/index`

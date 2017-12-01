@@ -31,16 +31,16 @@ class orderList extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        if (equalByProps(this.props, prevProps, ['pageIndex', 'order_id', 'status', 'startTime', 'endTime'])) {
+        if (equalByProps(this.props, prevProps, ['page', 'order_id', 'status', 'start_time', 'end_time'])) {
 
             this.handleFetchList()
         }
     }
 
     handleFetchList() {
-        const { pageIndex, pageSize, order_id, status, startTime, endTime, fetchOrderList } = this.props
+        const { page, page_size, order_id, status, start_time, end_time, fetchOrderList } = this.props
    
-        fetchOrderList({ pageIndex, pageSize, order_id, status, startTime, endTime });
+        fetchOrderList({ page, page_size, order_id, status, start_time, end_time });
     }
 
     handleSearch(value) {
@@ -49,10 +49,10 @@ class orderList extends PureComponent {
         replaceQuery(value)
     }
 
-    handleChangePage({ current: pageIndex }) {
+    handleChangePage({ current: page }) {
         const { updateQuery } = this.props
 
-        updateQuery({ pageIndex })
+        updateQuery({ page })
     }
 
     handleRefund({ order_id, pay_money }) {
@@ -87,12 +87,12 @@ class orderList extends PureComponent {
     }
 
     render() {
-        const { list, total, pageSize, pageIndex, order_id, status, startTime, endTime } = this.props
+        const { list, total, page_size, page, order_id, status, start_time, end_time } = this.props
 
         const pagination = {
-            pageSize,
+            page_size,
             total,
-            current: pageIndex
+            current: page
         }
         return (
             <section className="merchant-list">
@@ -101,8 +101,8 @@ class orderList extends PureComponent {
                         onSearch={this.handleSearch}
                         order_id={order_id}
                         status={status}
-                        startTime={startTime}
-                        endTime={endTime}
+                        start_time={start_time}
+                        end_time={end_time}
                     />
                 </div>
                 <div>
@@ -121,14 +121,14 @@ class orderList extends PureComponent {
 
 const mapStateToProps = ({ orderList }, { location }) => {
     const { list, pageSize, total } = orderList
-    const { pageIndex, ...others } = URI.parseQuery(location.search)
+    const { page, ...others } = URI.parseQuery(location.search)
 
     return {
         ...others,
         list,
-        pageSize,
+        page_size: pageSize,
         total: Number(total),
-        pageIndex: Number(pageIndex || 1)
+        page: Number(page || 1)
     }
 }
 

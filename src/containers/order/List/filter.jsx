@@ -35,8 +35,8 @@ class Filter extends PureComponent {
 
             onSearch({
                 ...others,
-                startTime: pay_time && pay_time[0] && pay_time[0].unix(),
-                endTime: pay_time && pay_time[1] && pay_time[1].unix()
+                start_time: pay_time && pay_time[0] && pay_time[0].unix(),
+                end_time: pay_time && pay_time[1] && pay_time[1].unix()
             })
         });
     }
@@ -99,7 +99,7 @@ class Filter extends PureComponent {
     }
 
     renderAdvancedForm() {
-        const { order_id, status, startTime, endTime, form: { getFieldDecorator } } = this.props
+        const { order_id, status, start_time, end_time, form: { getFieldDecorator } } = this.props
 
         return (
             <Form onSubmit={this.handleSearch} layout="inline">
@@ -131,7 +131,7 @@ class Filter extends PureComponent {
                             {
                                 getFieldDecorator(
                                     'pay_time',
-                                    { initialValue: [ startTime && moment.unix(startTime), endTime && moment.unix(endTime) ] }
+                                    { initialValue: [ start_time && moment.unix(start_time), end_time && moment.unix(end_time) ] }
                                 )(
                                     <RangePicker
                                         showTime

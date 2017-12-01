@@ -12,6 +12,8 @@ import categoryEdit from './categoryEdit'
 import goodsList from './goodsList'
 import goodsEdit from './goodsEdit'
 
+import statList from './statList'
+
 export default {
     user,
     menu,
@@ -21,5 +23,6 @@ export default {
     categoryList,
     categoryEdit,
     goodsList,
-    goodsEdit
+    goodsEdit,
+    statList
 }
