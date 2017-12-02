@@ -4,33 +4,12 @@ import sidebarPaths from 'constants/sidebar';
 
 function setSidebarPath(menu) {
     const menuItems = menu.map((item) => {
-        if (Array.isArray(item.children)) {
-
-            return {
-                ...item,
-                children: item.children.map(m => ({
-                    ...m,
-                    path: sidebarPaths[m.id].path,
-                    icon: sidebarPaths[m.id].icon,
-                }))
-            };
-        }
-
-        return {
-            ...item,
-            path: sidebarPaths[item.id].path
-        };
-    });
-}
-
-function setSidebarPath(menu) {
-    const menuItems = menu.map((item) => {
         if (Array.isArray(item.chidren)) {
             return {
                 ...item,
                 chidren: item.chidren.map(m => ({
                     ...m,
-                    path: sidebarPaths[m.id].path
+                    path: (sidebarPaths[m.id] && sidebarPaths[m.id].path) || ''
                 }))
             };
         }
