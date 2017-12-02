@@ -29,6 +29,13 @@ export default function goodsList (state = initState, { type, payload }) {
         }
     }
 
+    case actionTypes.GOODS_REMOVE_LOADING: {
+        return {
+            ...state,
+            loading: false
+        }
+    }
+
     default:
         return state
   }

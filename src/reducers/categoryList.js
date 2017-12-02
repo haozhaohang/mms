@@ -29,6 +29,13 @@ export default function categoryList (state = initState, { type, payload }) {
         }
     }
 
+    case actionTypes.CATEGROY_REMOVE_LOADING: {
+        return {
+            ...state,
+            loading: false
+        }
+    }
+
     default:
         return state
   }

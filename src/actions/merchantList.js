@@ -5,6 +5,7 @@ import { get, post } from 'assets/js/request'
 
 const finishMerchantList = actionCreator(actionTypes.MERCHANT_LIST_SUC)
 const addLoading = actionCreator(actionTypes.MERCHANT_ADD_LOADING)
+const removeLoading = actionCreator(actionTypes.MERCHANT_REMOVE_LOADING)
 
 // 门店列表
 export const fetchMerchantList = (params ={}) => {
@@ -14,6 +15,7 @@ export const fetchMerchantList = (params ={}) => {
         try {
             payload = await get(api.MERCHANT_LIST, params);
         } catch (e) {
+            dispatch(removeLoading())
             return
         }
 

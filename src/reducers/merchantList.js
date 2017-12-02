@@ -29,6 +29,13 @@ export default function merchantList (state = initState, { type, payload }) {
         }
     }
 
+    case actionTypes.MERCHANT_REMOVE_LOADING: {
+        return {
+            ...state,
+            loading: false
+        }
+    }
+
     default:
         return state
   }

@@ -29,6 +29,13 @@ export default function orderList (state = initState, { type, payload }) {
         }
     }
 
+    case actionTypes.ORDER_REMOVE_LOADING: {
+        return {
+            ...state,
+            loading: false
+        }
+    }
+
     default:
         return state
   }

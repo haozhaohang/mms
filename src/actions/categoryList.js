@@ -5,6 +5,7 @@ import { get, post } from 'assets/js/request'
 
 const finishCategoryList = actionCreator(actionTypes.CATEGROY_LIST_SUC)
 const addLoading = actionCreator(actionTypes.CATEGROY_ADD_LOADING)
+const removeLoading = actionCreator(actionTypes.CATEGROY_REMOVE_LOADING)
 
 // 商品分类列表
 export const fetchCategoryList = (params ={}) => {
@@ -14,6 +15,7 @@ export const fetchCategoryList = (params ={}) => {
         try {
             payload = await get(api.CATEGORY_LIST, params);
         } catch (e) {
+            dispatch(removeLoading())
             return
         }
        dispatch(finishCategoryList(payload))

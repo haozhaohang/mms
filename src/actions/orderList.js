@@ -5,6 +5,7 @@ import { get, post } from 'assets/js/request'
 
 const finishOrderList = actionCreator(actionTypes.ORDER_LIST_SUC)
 const addLoading = actionCreator(actionTypes.ORDER_ADD_LOADING)
+const removeLoading = actionCreator(actionTypes.ORDER_REMOVE_LOADING)
 
 // 订单列表
 export const fetchOrderList = (params ={}) => {
@@ -14,6 +15,7 @@ export const fetchOrderList = (params ={}) => {
         try {
             payload = await get(api.ORDER_LIST, params);
         } catch (e) {
+            dispatch(removeLoading())
             return
         }
 
