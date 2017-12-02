@@ -5,7 +5,7 @@ class Card extends PureComponent {
 
     render() {
         const { info } = this.props
-        console.log(info)
+
         return (
             <div className="stat-card">
                 <div className="title">
@@ -30,7 +30,7 @@ class Card extends PureComponent {
                     </div>
                 </div>
                 <div className="card-footer">
-                    实际收入金额：990
+                    订单笔数：{info.number}
                 </div>
             </div>
         )

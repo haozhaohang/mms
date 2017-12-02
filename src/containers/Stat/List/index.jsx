@@ -117,6 +117,7 @@ class StatList extends PureComponent {
                                 info={{
                                     name: '总金额',
                                     tip: '包含网费和超市收入',
+                                    number: netFee.number + shop.number,
                                     pay_money: netFee.pay_money + shop.pay_money,
                                     total_money: netFee.total_money + shop.total_money,
                                     discount_money: netFee.discount_money + shop.discount_money

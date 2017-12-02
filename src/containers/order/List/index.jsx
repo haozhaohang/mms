@@ -7,7 +7,8 @@ import { equalByProps } from 'assets/js/util'
 import * as actions from 'actions/orderList'
 import * as router from 'actions/router'
 import columns from './columns'
-import Filter from './filter';
+import Filter from './filter'
+import RefundModal from './refundModal'
 
 import './index.css'
 
@@ -17,6 +18,11 @@ class orderList extends PureComponent {
     constructor(props) {
         super(props)
 
+        this.state = {
+            refundVisible: false,
+            rowVal: {}
+        }
+
         this.columns = columns(this)
 
         this.handleFetchList = this.handleFetchList.bind(this)
@@ -24,6 +30,7 @@ class orderList extends PureComponent {
         this.handleChangePage = this.handleChangePage.bind(this)
         this.handleRefund = this.handleRefund.bind(this)
         this.handleRepetitionBill = this.handleRepetitionBill.bind(this)
+        this.handleState = this.handleState.bind(this)
     }
 
     componentDidMount() {
@@ -55,13 +62,19 @@ class orderList extends PureComponent {
         updateQuery({ page })
     }
 
-    handleRefund({ order_id, pay_money }) {
+    handleRefund(value) {
         const { fetchRefund } = this.props
+
+        if (Number(value.order_type) === 2) {
+            this.handleState({ refundVisible: true, rowVal: value })
+
+            return;
+        }
 
         confirm({
             title: `您确定要退款码?`,
             content: '请谨慎操作!',
-            onOk: () => fetchRefund({ order_id, refund_money: pay_money }).then( () => {
+            onOk: () => fetchRefund({ order_id: value.order_id, refund_money: value.pay_money }).then( () => {
                 notification.success({
                     message: '提示信息',
                     description: '退款成功'
@@ -85,9 +98,16 @@ class orderList extends PureComponent {
             })
         });
     }
+    
+    handleState(rest) {
+        this.setState({
+            ...rest
+        })
+    }
 
     render() {
-        const { list, total, pageSize, page, loading, order_id, status, machine_no, start_time, end_time } = this.props
+        const { refundVisible, rowVal } = this.state
+        const { list, total, pageSize, page, loading, order_id, status, machine_no, start_time, end_time, fetchRefund } = this.props
 
         const pagination = {
             pageSize,
@@ -106,16 +126,20 @@ class orderList extends PureComponent {
                         end_time={end_time}
                     />
                 </div>
-                <div>
-                    <Table
-                        bordered
-                        loading={loading}
-                        columns={this.columns}
-                        dataSource={list}
-                        pagination={pagination}
-                        onChange={this.handleChangePage}
-                    />
-                </div>
+                <Table
+                    bordered
+                    loading={loading}
+                    columns={this.columns}
+                    dataSource={list}
+                    pagination={pagination}
+                    onChange={this.handleChangePage}
+                />
+                <RefundModal
+                    visible={refundVisible}
+                    value={rowVal}
+                    onOk={params => fetchRefund(params)}
+                    onCancel={() => this.handleState({ refundVisible: false })}
+                />
             </section>
         )
     }

@@ -59,7 +59,7 @@ class Filter extends PureComponent {
     }
 
     renderSimpleForm() {
-        const { merchant_name, owner_telephone, form: { getFieldDecorator } } = this.props
+        const { merchant_name, status, form: { getFieldDecorator } } = this.props
 
         const statusOptions = Object.entries(MERCHANT_STATUS).map(([ value, label ]) => (
             <Option key={value} value={String(value)}>{label}</Option>)
@@ -76,7 +76,7 @@ class Filter extends PureComponent {
                         </FormItem>
                     </Col>
                     <Col md={8} sm={24}>
-                        <FormItem label="分类状态">
+                        <FormItem label="门店状态">
                             {getFieldDecorator('status', { initialValue: status })(
                                 <Select placeholder="请选择">
                                     <Option value="">全部</Option>
@@ -100,7 +100,11 @@ class Filter extends PureComponent {
     }
 
     renderAdvancedForm() {
-        const { merchant_name, owner_telephone, start_time, end_time, form: { getFieldDecorator } } = this.props
+        const { merchant_name, status, start_time, end_time, form: { getFieldDecorator } } = this.props
+
+        const statusOptions = Object.entries(MERCHANT_STATUS).map(([ value, label ]) => (
+            <Option key={value} value={String(value)}>{label}</Option>)
+        )
 
         return (
             <Form onSubmit={this.handleSearch} layout="inline">
@@ -115,12 +119,13 @@ class Filter extends PureComponent {
                         </FormItem>
                     </Col>
                     <Col md={8} sm={24}>
-                        <FormItem label="手机号">
-                            {
-                                getFieldDecorator('owner_telephone', { initialValue: owner_telephone })(
-                                    <Input placeholder="请输入" />
-                                )
-                            }
+                        <FormItem label="门店状态">
+                            {getFieldDecorator('status', { initialValue: status })(
+                                <Select placeholder="请选择">
+                                    <Option value="">全部</Option>
+                                    {statusOptions}
+                                </Select>
+                            )}
                         </FormItem>
                     </Col>
                     <Col md={8} sm={24}>

@@ -31,15 +31,15 @@ class MerchantList extends PureComponent {
     }
 
     componentDidUpdate(prevProps) {
-        if (equalByProps(this.props, prevProps, ['page', 'merchant_name',  'owner_telephone',  'start_time', 'end_time'])) {
+        if (equalByProps(this.props, prevProps, ['page', 'merchant_name',  'status',  'start_time', 'end_time'])) {
             this.handleFetchList()
         }
     }
 
     handleFetchList() {
-        const { page, pageSize, merchant_name, owner_telephone, start_time, end_time, fetchMerchantList } = this.props
+        const { page, pageSize, merchant_name, status, start_time, end_time, fetchMerchantList } = this.props
 
-        fetchMerchantList({ page, merchant_name, owner_telephone, start_time, end_time, page_size: pageSize });
+        fetchMerchantList({ page, merchant_name, status, start_time, end_time, page_size: pageSize });
     }
 
     handleSearch(value) {
@@ -72,7 +72,7 @@ class MerchantList extends PureComponent {
     }
 
     render() {
-        const { list, total, page, pageSize, loading, merchant_name, owner_telephone, start_time, end_time } = this.props
+        const { list, total, page, pageSize, loading, merchant_name, status, start_time, end_time } = this.props
         const pagination = {
             pageSize,
             total,
@@ -84,7 +84,7 @@ class MerchantList extends PureComponent {
                 <div className="filter-content">
                     <Filter
                         merchant_name={merchant_name}
-                        owner_telephone={owner_telephone}
+                        status={status}
                         start_time={start_time}
                         end_time={end_time}
                         onSearch={this.handleSearch}

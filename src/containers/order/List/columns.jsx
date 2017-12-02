@@ -50,7 +50,7 @@ export default function(component) {
                 title: '退款金额',
                 dataIndex: 'refund_money',
                 render: val => `${val}元`
-            }
+            },
             {
                 title: '状态',
                 dataIndex: 'status_desc'
